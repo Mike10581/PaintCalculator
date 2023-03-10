@@ -12,11 +12,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
+    SharedPreferences sharedPref;
 
     // Handle the result of AddRoomActivity
     private ActivityResultLauncher<Intent> addRoomLauncher = registerForActivityResult(
@@ -26,7 +29,10 @@ public class MainActivity extends AppCompatActivity {
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == RESULT_OK) {
                         // Run your code here
-                        Toast.makeText(MainActivity.this, "AddRoomActivity finished", Toast.LENGTH_SHORT).show();
+
+                        String message = sharedPref.getString("message", "");
+                        Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+
                     }
                 }
             });
@@ -37,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button addRoom = (Button) findViewById(R.id.btnAddRoom);
-
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         addRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
