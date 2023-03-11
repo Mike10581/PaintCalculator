@@ -2,4 +2,14 @@
     <string name="app_name">Paint Calculator</string>
     <string name="txtSplash">Splash Screen Image</string>
     <string name="txtLoading">Loading...</string>
+    <string name="txtAddRoom">Add Room</string>
+    <string name="lblHeight">Height:</string>
+    <string name="lblWidth">Width:</string>
+    <string name="lblLength">Length:</string>
+    <string name="lblFT">FT</string>
+    <string name="lblInch">in</string>
+    <string name="btnSave">Save</string>
+    <string name="btnCancel">Cancel</string>
+    <string name="lblColor">Paint color:</string>
+    <string name="btnClear">Clear</string>
 </resources>
