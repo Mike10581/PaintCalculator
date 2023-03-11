@@ -12,7 +12,15 @@
         style="@style/Widget.AppCompat.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/txtAddRoom"
+        android:text="@string/btnAddRoom"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnAddWindow"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnAddWindow"
         android:textSize="18sp" />
 
     <ScrollView

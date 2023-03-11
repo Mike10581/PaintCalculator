@@ -18,6 +18,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO add removing ~ and : from text inputs
 public class AddRoomActivity extends AppCompatActivity {
 
     @Override

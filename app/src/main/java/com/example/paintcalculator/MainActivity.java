@@ -26,7 +26,7 @@ import org.json.JSONObject;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-
+    //TODO remove reading all keys and values and read only needed
     SharedPreferences sharedPref;
     TextView textView;
 //    SharedPreferences.Editor editor = sharedPref.edit();
@@ -51,10 +51,18 @@ public class MainActivity extends AppCompatActivity {
                                     for (String room : parsedRooms) {
                                         String[] parsedRoom = room.split(":");
                                         sb.append(parsedRoom[0]).append(". ").append(parsedRoom[5]).append("\n");
-                                        sb.append("- Dimensions (inch): ").append(parsedRoom[1]).append("\"W x ").append(parsedRoom[2]).append("\"L x ").append(parsedRoom[3]).append("\"H ").append("\n");
+
+                                        int width = Integer.parseInt(parsedRoom[1]);
+                                        int length = Integer.parseInt(parsedRoom[2]);
+                                        int height = Integer.parseInt(parsedRoom[3]);
+
+                                        sb.append("- Size: ");
+                                        sb.append(width / 12).append("' ").append(width % 12).append("\"W x ");
+                                        sb.append(length / 12).append("' ").append(length % 12).append("\"L x ");
+                                        sb.append(height / 12).append("' ").append(height % 12).append("\"H\n");
+
                                         sb.append("- Color: ").append(parsedRoom[4]).append("\n");
                                     }
-
 
                                 }
 //                                String[] parsedKey = entry.getKey().split(":");
