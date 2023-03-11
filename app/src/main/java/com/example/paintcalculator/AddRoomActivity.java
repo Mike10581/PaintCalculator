@@ -41,66 +41,79 @@ public class AddRoomActivity extends AppCompatActivity {
                 EditText heightFT = (EditText) findViewById(R.id.txtRoomHeightFT);
                 EditText heightInch = (EditText) findViewById(R.id.txtRoomHeightInch);
                 EditText roomColor = (EditText) findViewById(R.id.txtRoomColor);
+                EditText roomTitle = (EditText) findViewById(R.id.txtRoomTitle);
 
                 int width = 0;
-                if (!widthFT.getText().toString().equals("")) {
-                    width += Integer.parseInt(widthFT.getText().toString()) * 12;
-                }
-                if (!widthInch.getText().toString().equals("")) {
-                    width += Integer.parseInt(widthInch.getText().toString());
-                }
-
                 int length = 0;
-                if (!lengthFT.getText().toString().equals("")) {
-                    length += Integer.parseInt(lengthFT.getText().toString()) * 12;
-                }
-                if (!lengthInch.getText().toString().equals("")) {
-                    length += Integer.parseInt(lengthInch.getText().toString());
-                }
-
                 int height = 0;
-                if (!heightFT.getText().toString().equals("")) {
+
+                try {
+                    width += Integer.parseInt(widthFT.getText().toString()) * 12;
+                } catch (Exception e) {}
+                try {
+                    width += Integer.parseInt(widthInch.getText().toString());
+                } catch (Exception e) {}
+
+                try {
+                    length += Integer.parseInt(lengthFT.getText().toString()) * 12;
+                } catch (Exception e) {}
+                try {
+                    length += Integer.parseInt(lengthInch.getText().toString());
+                } catch (Exception e) {}
+
+                try {
                     height += Integer.parseInt(heightFT.getText().toString()) * 12;
-                }
-                if (!heightInch.getText().toString().equals("")) {
+                } catch (Exception e) {}
+
+                 try {
                     height += Integer.parseInt(heightInch.getText().toString());
-                }
+                } catch (Exception e) {}
+
 
                 String color = roomColor.getText().toString();
-                boolean error = color.equals("") || width == 0 || length == 0 || height == 0;
+                String title = roomTitle.getText().toString();
+                boolean error = color.equals("") || width == 0 || length == 0 || height == 0 || title.length() == 0;
 
                 if (error) {
                     Toast.makeText(AddRoomActivity.this, "ERROR!!! Missing data.", Toast.LENGTH_SHORT).show();
                 } else {
-                    String res = "Room " + width + "in X " + length + "in X " + height + "in, color: " + color + " was added.";
+                    String res = "Room \"" + title + "\" in color: " + color + " was added.";
 
-                    String areaKey = "COLOR:" + roomColor.getText().toString();
-                    String ceilingKey = "CEILING";
+//                    String areaKey = "COLOR:" + roomColor.getText().toString();
+//                    String ceilingKey = "CEILING";
                     String roomsAmountKey = "ROOMS_AMOUNT";
+                    String roomsKey = "ROOMS";
 
-                    int area = sharedPref.getInt(areaKey, 0);
-                    int ceiling = sharedPref.getInt(ceilingKey, 0);
+//                    int area = sharedPref.getInt(areaKey, 0);
+//                    int ceiling = sharedPref.getInt(ceilingKey, 0);
                     int roomNumber = sharedPref.getInt(roomsAmountKey, 0) + 1;
 
-                    area = area + (width + length) * height * 2;
-                    ceiling = ceiling + width * length;
+//                    area = area + (width + length) * height * 2;
+//                    ceiling = ceiling + width * length;
 
 
 
 
+                    String rooms = sharedPref.getString("ROOMS", "");
+                    if (rooms.length()>0)
+                    {
+                        rooms = rooms + "~";
+                    }
+                    rooms = rooms + roomNumber + ":" + width + ":" + length + ":" + height + ":" + color.toUpperCase() + ":" + title;
 
-
+                    editor.putString(roomsKey, rooms);
 
 
 
 
                     editor.putString("MESSAGE", res);
-                    editor.putInt(areaKey, area);
-                    editor.putInt(ceilingKey, ceiling);
+//                    editor.putInt(areaKey, area);
+//                    editor.putInt(ceilingKey, ceiling);
                     editor.putInt(roomsAmountKey, roomNumber);
-                    String roomKey = "ROOM:" + roomNumber;
-                    String roomDescription = width + ":" + length + ":" + height + ":" + color.toUpperCase();
-                    editor.putString(roomKey, roomDescription);
+//                    String roomKey = "ROOM:" + roomNumber;
+//                    String roomDescription = width + ":" + length + ":" + height + ":" + color.toUpperCase();
+//                    editor.putString(roomKey, roomDescription);
+
                     editor.commit();
 
                     Intent intent = new Intent();
