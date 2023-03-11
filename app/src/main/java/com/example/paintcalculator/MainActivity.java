@@ -44,18 +44,24 @@ public class MainActivity extends AppCompatActivity {
                         StringBuilder sb = new StringBuilder();
                         for (Map.Entry<String, ?> entry : dataset.entrySet()) {
                             if (!entry.getKey().equals("MESSAGE")) {
-                                sb.append(entry.getKey()).append(": ").append(entry.getValue().toString()).append("\n");
+                                String[] parsedKey = entry.getKey().split(":");
+                                if (parsedKey[0].equals("COLOR")) {
+                                    sb.append(parsedKey[0]).append(" - ").append(parsedKey[1]).append("\n\n");
+                                } else if (parsedKey[0].equals("ROOM")) {
+                                    String[] parsedValue = entry.getValue().toString().split(":");
+                                    sb.append(parsedKey[0]).append(" - ").append(parsedKey[1]).append("\n")
+                                            .append("- ").append(parsedValue[0]).append("W x ")
+                                            .append(parsedValue[1]).append("L x ")
+                                            .append(parsedValue[2]).append("H (inch)\n").append("- color: ").append(parsedValue[3]).append("\n\n");
+                                } else {
+                                    sb.append("! - ").append(entry.getKey()).append(": ").append(entry.getValue().toString()).append("\n\n");
+                                }
                             }
 
                         }
                         String store = sb.toString();
 
                         textView.setText(store);
-
-//                        ListView listView = (ListView) findViewById(R.id.lstView);
-//                        listView.setEnt
-//                        entries.addAll(preferences.getAll().entrySet());
-
 
                         Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
 

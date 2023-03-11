@@ -99,7 +99,7 @@ public class AddRoomActivity extends AppCompatActivity {
                     editor.putInt(ceilingKey, ceiling);
                     editor.putInt(roomsAmountKey, roomNumber);
                     String roomKey = "ROOM:" + roomNumber;
-                    String roomDescription = width + ":" + length + ":" + height + ":" + color;
+                    String roomDescription = width + ":" + length + ":" + height + ":" + color.toUpperCase();
                     editor.putString(roomKey, roomDescription);
                     editor.commit();
 
