@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">Paint Calculator</string>
     <string name="txtSplash">Splash Screen Image</string>
-    <string name="txtLoading">Loading...</string>
-    <string name="txtAddRoom">Add Room</string>
+    <string name="txtLoading">Loading…</string>
+    <string name="txtAddRoom">Adding room…</string>
+    <string name="btnAddRoom">Add Room</string>
+    <string name="txtAddWindow">Adding window…</string>
+    <string name="btnAddWindow">Add window</string>
     <string name="lblHeight">Height:</string>
     <string name="lblWidth">Width:</string>
     <string name="lblLength">Length:</string>
@@ -12,4 +15,5 @@
     <string name="btnCancel">Cancel</string>
     <string name="lblColor">Paint color:</string>
     <string name="btnClear">Clear</string>
+    <string name="lblRoomTitle">Enter title for the room</string>
 </resources>

@@ -26,7 +26,7 @@ import org.json.JSONObject;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-
+    //TODO remove reading all keys and values and read only needed
     SharedPreferences sharedPref;
     TextView textView;
 //    SharedPreferences.Editor editor = sharedPref.edit();
@@ -44,18 +44,41 @@ public class MainActivity extends AppCompatActivity {
                         StringBuilder sb = new StringBuilder();
                         for (Map.Entry<String, ?> entry : dataset.entrySet()) {
                             if (!entry.getKey().equals("MESSAGE")) {
-                                String[] parsedKey = entry.getKey().split(":");
-                                if (parsedKey[0].equals("COLOR")) {
-                                    sb.append(parsedKey[0]).append(" - ").append(parsedKey[1]).append("\n\n");
-                                } else if (parsedKey[0].equals("ROOM")) {
-                                    String[] parsedValue = entry.getValue().toString().split(":");
-                                    sb.append(parsedKey[0]).append(" - ").append(parsedKey[1]).append("\n")
-                                            .append("- ").append(parsedValue[0]).append("W x ")
-                                            .append(parsedValue[1]).append("L x ")
-                                            .append(parsedValue[2]).append("H (inch)\n").append("- color: ").append(parsedValue[3]).append("\n\n");
-                                } else {
-                                    sb.append("! - ").append(entry.getKey()).append(": ").append(entry.getValue().toString()).append("\n\n");
+                                if (entry.getKey().equals("ROOMS")) {
+                                    String[] parsedRooms = entry.getValue().toString().split("~");
+
+                                    sb.append("ROOMS:").append("\n");
+                                    for (String room : parsedRooms) {
+                                        String[] parsedRoom = room.split(":");
+                                        sb.append(parsedRoom[0]).append(". ").append(parsedRoom[5]).append("\n");
+
+                                        int width = Integer.parseInt(parsedRoom[1]);
+                                        int length = Integer.parseInt(parsedRoom[2]);
+                                        int height = Integer.parseInt(parsedRoom[3]);
+
+                                        sb.append("- Size: ");
+                                        sb.append(width / 12).append("' ").append(width % 12).append("\"W x ");
+                                        sb.append(length / 12).append("' ").append(length % 12).append("\"L x ");
+                                        sb.append(height / 12).append("' ").append(height % 12).append("\"H\n");
+
+                                        sb.append("- Color: ").append(parsedRoom[4]).append("\n");
+                                    }
+
                                 }
+//                                String[] parsedKey = entry.getKey().split(":");
+//                                if (parsedKey[0].equals("COLOR")) {
+//                                    sb.append(parsedKey[0]).append(" - ").append(parsedKey[1]).append("\n\n");
+//                                } else if (parsedKey[0].equals("ROOM")) {
+//                                    String[] parsedValue = entry.getValue().toString().split(":");
+//                                    sb.append(parsedKey[0]).append(" - ").append(parsedKey[1]).append("\n")
+//                                            .append("- ").append(parsedValue[0]).append("W x ")
+//                                            .append(parsedValue[1]).append("L x ")
+//                                            .append(parsedValue[2]).append("H (inch)\n").append("- color: ").append(parsedValue[3]).append("\n\n");
+//                                } else {
+//                                    sb.append("! - ").append(entry.getKey()).append(": ").append(entry.getValue().toString()).append("\n\n");
+//                                }
+//
+                                sb.append("* - ").append(entry.getKey()).append("-> ").append(entry.getValue().toString()).append("\n\n");
                             }
 
                         }
