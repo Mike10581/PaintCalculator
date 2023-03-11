@@ -29,9 +29,9 @@ public class MainActivity extends AppCompatActivity {
     //TODO remove reading all keys and values and read only needed
     SharedPreferences sharedPref;
     TextView textView;
-//    SharedPreferences.Editor editor = sharedPref.edit();
-    // Handle the result of AddRoomActivity
-    private ActivityResultLauncher<Intent> addRoomLauncher = registerForActivityResult(
+
+    // Handle the result of AddRoomActivity, AddWindowActivity,
+    private ActivityResultLauncher<Intent> addDataLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
@@ -47,21 +47,39 @@ public class MainActivity extends AppCompatActivity {
                                 if (entry.getKey().equals("ROOMS")) {
                                     String[] parsedRooms = entry.getValue().toString().split("~");
 
-                                    sb.append("ROOMS:").append("\n");
                                     for (String room : parsedRooms) {
-                                        String[] parsedRoom = room.split(":");
-                                        sb.append(parsedRoom[0]).append(". ").append(parsedRoom[5]).append("\n");
+                                        String[] parsedRoom = room.split(",");
 
-                                        int width = Integer.parseInt(parsedRoom[1]);
-                                        int length = Integer.parseInt(parsedRoom[2]);
-                                        int height = Integer.parseInt(parsedRoom[3]);
+                                        String[] parsedInfo = parsedRoom[0].split(":");
+
+                                        sb.append(parsedInfo[0]).append(". ").append(parsedInfo[5]).append("\n");
+
+                                        int width = Integer.parseInt(parsedInfo[1]);
+                                        int length = Integer.parseInt(parsedInfo[2]);
+                                        int height = Integer.parseInt(parsedInfo[3]);
 
                                         sb.append("- Size: ");
                                         sb.append(width / 12).append("' ").append(width % 12).append("\"W x ");
                                         sb.append(length / 12).append("' ").append(length % 12).append("\"L x ");
                                         sb.append(height / 12).append("' ").append(height % 12).append("\"H\n");
+                                        sb.append("- Color: ").append(parsedInfo[4]).append("\n");
 
-                                        sb.append("- Color: ").append(parsedRoom[4]).append("\n");
+                                        if (parsedRoom.length > 1) {
+                                            if (parsedRoom[1].length() > 0) {
+                                                sb.append("Windows->").append(parsedRoom[1]).append("<-\n");
+//                                            String[] parsedWindows = parsedRoom[1].split("!");
+                                            }
+
+                                            if (parsedRoom[2].length() > 0) {
+                                                sb.append("Doors->").append(parsedRoom[2]).append("<-\n");
+//                                            String[] parsedDoors = parsedRoom[2].split("!");
+                                            }
+                                        }
+
+
+
+
+
                                     }
 
                                 }
@@ -98,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button addRoom = (Button) findViewById(R.id.btnAddRoom);
+        Button addWindow = (Button) findViewById(R.id.btnAddWindow);
         Button clear = (Button) findViewById(R.id.btnClear);
         textView = findViewById(R.id.txtRoomsList);
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -105,7 +124,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddRoomActivity.class);
-                addRoomLauncher.launch(intent);
+                addDataLauncher.launch(intent);
+            }
+        });
+
+        addWindow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AddWindowActivity.class);
+                addDataLauncher.launch(intent);
             }
         });
 
@@ -122,8 +149,6 @@ public class MainActivity extends AppCompatActivity {
         String store = sb.toString();
 
         textView.setText(store);
-
-
 
 
         clear.setOnClickListener(new View.OnClickListener() {

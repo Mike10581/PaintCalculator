@@ -73,48 +73,30 @@ public class AddRoomActivity extends AppCompatActivity {
 
                 String color = roomColor.getText().toString();
                 String title = roomTitle.getText().toString();
+
                 boolean error = color.equals("") || width == 0 || length == 0 || height == 0 || title.length() == 0;
 
                 if (error) {
                     Toast.makeText(AddRoomActivity.this, "ERROR!!! Missing data.", Toast.LENGTH_SHORT).show();
                 } else {
-                    String res = "Room \"" + title + "\" in color: " + color + " was added.";
+                    String response = "Room \"" + title + "\" in color: " + color + " was added.";
 
-//                    String areaKey = "COLOR:" + roomColor.getText().toString();
-//                    String ceilingKey = "CEILING";
                     String roomsAmountKey = "ROOMS_AMOUNT";
                     String roomsKey = "ROOMS";
+                    String messageKey = "MESSAGE";
 
-//                    int area = sharedPref.getInt(areaKey, 0);
-//                    int ceiling = sharedPref.getInt(ceilingKey, 0);
                     int roomNumber = sharedPref.getInt(roomsAmountKey, 0) + 1;
+                    String rooms = sharedPref.getString(roomsKey, "");
 
-//                    area = area + (width + length) * height * 2;
-//                    ceiling = ceiling + width * length;
-
-
-
-
-                    String rooms = sharedPref.getString("ROOMS", "");
                     if (rooms.length()>0)
                     {
                         rooms = rooms + "~";
                     }
-                    rooms = rooms + roomNumber + ":" + width + ":" + length + ":" + height + ":" + color.toUpperCase() + ":" + title;
+                    rooms = rooms + roomNumber + ":" + width + ":" + length + ":" + height + ":" + color.toUpperCase() + ":" + title + "," + ",";
 
+                    editor.putString(messageKey, response);
                     editor.putString(roomsKey, rooms);
-
-
-
-
-                    editor.putString("MESSAGE", res);
-//                    editor.putInt(areaKey, area);
-//                    editor.putInt(ceilingKey, ceiling);
                     editor.putInt(roomsAmountKey, roomNumber);
-//                    String roomKey = "ROOM:" + roomNumber;
-//                    String roomDescription = width + ":" + length + ":" + height + ":" + color.toUpperCase();
-//                    editor.putString(roomKey, roomDescription);
-
                     editor.commit();
 
                     Intent intent = new Intent();

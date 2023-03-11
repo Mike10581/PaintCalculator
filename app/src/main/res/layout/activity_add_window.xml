@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AddRoomActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/txtAddWindow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FF6200EE"
+                android:gravity="center_horizontal"
+                android:text="@string/txtAddWindow"
+                android:textColor="#FFFFFF"
+                android:textSize="34sp"
+                android:textStyle="bold" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10sp"
+                android:gravity="end">
+
+                <TextView
+                    android:id="@+id/lblWindowWidth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="5dp"
+                    android:text="@string/lblWidth"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/txtWindowWidthFT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="4"
+                    android:inputType="number"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/lblWindowWidthFT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lblFT"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/txtWindowWidthInch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:inputType="numberDecimal"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/lblWindowWidthInch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lblInch"
+                    android:textSize="20sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10sp"
+                android:gravity="end">
+
+                <TextView
+                    android:id="@+id/lblWindowLength"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="5dp"
+                    android:text="@string/lblLength"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/txtWindowLengthFT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="4"
+                    android:inputType="number"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/lblWindowLengthFT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lblFT"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/txtWindowLengthInch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:inputType="numberDecimal"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/lblWindowLengthInch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lblInch"
+                    android:textSize="20sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10sp"
+                android:gravity="end">
+
+                <TextView
+                    android:id="@+id/lblWindowQuantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="5dp"
+                    android:text="@string/lblQuantity"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/txtWindowQuantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="3"
+                    android:inputType="numberDecimal"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/lblWindowPcs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lblPcs"
+                    android:textSize="20sp" />
+            </TableRow>
+
+            <TextView
+                android:id="@+id/lblWindowTrims"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5sp"
+                android:layout_marginTop="20sp"
+                android:layout_marginEnd="5sp"
+                android:background="#33000000"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                android:text="@string/txtTrims"
+                android:textSize="28sp" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10sp"
+                android:gravity="end">
+
+                <TextView
+                    android:id="@+id/lblWindowTrimsWidth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="5dp"
+                    android:text="@string/lblWidth"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/txtWindowTrimsWidth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:inputType="numberDecimal"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/lblWindowTrimsWidthInches"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lblInch"
+                    android:textSize="20sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10sp"
+                android:gravity="end">
+
+                <EditText
+                    android:id="@+id/txtWindowTrimsColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="11"
+                    android:hint="@string/lblColor"
+                    android:inputType="textPersonName"
+                    android:textSize="20sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal" >
+
+                <Button
+                    android:id="@+id/btnAddWindowSave"
+                    style="@style/Widget.AppCompat.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btnSave"
+                    android:textSize="18sp"
+                    tools:layout_editor_absoluteX="160dp"
+                    tools:layout_editor_absoluteY="50dp" />
+
+                <Button
+                    android:id="@+id/btnAddWindowCancel"
+                    style="@style/Widget.AppCompat.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btnCancel"
+                    android:textSize="18sp" />
+            </TableRow>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

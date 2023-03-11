@@ -11,6 +11,9 @@
     <string name="lblLength">Length:</string>
     <string name="lblFT">FT</string>
     <string name="lblInch">in</string>
+    <string name="lblQuantity">Quantity:</string>
+    <string name="lblPcs">pcs</string>
+    <string name="txtTrims">Trims</string>
     <string name="btnSave">Save</string>
     <string name="btnCancel">Cancel</string>
     <string name="lblColor">Paint color:</string>
