@@ -58,19 +58,42 @@ public class MainActivity extends AppCompatActivity {
                                         int length = Integer.parseInt(parsedInfo[2]);
                                         int height = Integer.parseInt(parsedInfo[3]);
 
-                                        sb.append("- Size: ");
+                                        sb.append("  - Size: ");
                                         sb.append(width / 12).append("' ").append(width % 12).append("\"W x ");
                                         sb.append(length / 12).append("' ").append(length % 12).append("\"L x ");
                                         sb.append(height / 12).append("' ").append(height % 12).append("\"H\n");
-                                        sb.append("- Color: ").append(parsedInfo[4]).append("\n");
+                                        sb.append("  - Color: ").append(parsedInfo[4]).append("\n");
 
                                         if (parsedRoom.length > 1) {
-                                            if (parsedRoom[1].length() > 0) {
-                                                sb.append("Windows->").append(parsedRoom[1]).append("<-\n");
+                                            if (parsedRoom[1].length() > 1) {
+                                                sb.append("* Windows:").append("\n");
+
+                                                String[] window = parsedRoom[1].split("!");
+                                                for (String el : window) {
+                                                    String[] parsedWindowInfo = el.split(":");
+                                                    int windowWidth = Integer.parseInt(parsedWindowInfo[0]);
+                                                    int windowLength = Integer.parseInt(parsedWindowInfo[1]);
+                                                    int windowQuantity = Integer.parseInt(parsedWindowInfo[2]);
+                                                    int windowTrimsWidth = Integer.parseInt(parsedWindowInfo[3]);
+                                                    String windowTrimsColor = parsedWindowInfo[4];
+                                                    sb.append("  - Size: ");
+                                                    sb.append(windowWidth / 12).append("' ").append(windowWidth % 12).append("\"W x ");
+                                                    sb.append(windowLength / 12).append("' ").append(windowLength % 12).append("\"L - ");
+                                                    sb.append(windowQuantity).append("pcs.\n");
+                                                    sb.append("  - Trims: ");
+                                                    sb.append(windowTrimsWidth).append("\"W, color - ").append(windowTrimsColor).append("\n");
+
+                                                }
+//                                                .append(parsedRoom[1]).append("<-\n");
+
+
+
+
+
 //                                            String[] parsedWindows = parsedRoom[1].split("!");
                                             }
 
-                                            if (parsedRoom[2].length() > 0) {
+                                            if (parsedRoom[2].length() > 1) {
                                                 sb.append("Doors->").append(parsedRoom[2]).append("<-\n");
 //                                            String[] parsedDoors = parsedRoom[2].split("!");
                                             }
@@ -78,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+                                        sb.append("\n");
 
                                     }
 
@@ -96,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 //                                    sb.append("! - ").append(entry.getKey()).append(": ").append(entry.getValue().toString()).append("\n\n");
 //                                }
 //
-                                sb.append("* - ").append(entry.getKey()).append("-> ").append(entry.getValue().toString()).append("\n\n");
+                                sb.append("\n\n* - ").append(entry.getKey()).append("-> ").append(entry.getValue().toString()).append("\n\n");
                             }
 
                         }
