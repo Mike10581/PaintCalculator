@@ -19,4 +19,6 @@
     <string name="lblColor">Paint color:</string>
     <string name="btnClear">Clear</string>
     <string name="lblRoomTitle">Enter title for the room</string>
+    <string name="promptRoom">Chose the room</string>
+    <string name="lblForTheRoom">for the room</string>
 </resources>

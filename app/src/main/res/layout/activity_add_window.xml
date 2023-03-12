@@ -14,7 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txtAddWindow"
@@ -26,6 +26,32 @@
                 android:textColor="#FFFFFF"
                 android:textSize="34sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lblWindowToRoom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5sp"
+                android:layout_marginTop="5sp"
+                android:layout_marginEnd="5sp"
+                android:background="#33000000"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                android:text="@string/lblForTheRoom"
+                android:textSize="28sp" />
+
+            <Spinner
+                android:id="@+id/txtExistingRoom"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginStart="5sp"
+                android:layout_marginEnd="5sp"
+                android:layout_marginBottom="20sp"
+                android:prompt="@string/promptRoom"
+                android:spinnerMode="dialog"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
 
             <TableRow
                 android:layout_width="match_parent"
@@ -214,7 +240,7 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_horizontal" >
+                android:gravity="center_horizontal">
 
                 <Button
                     android:id="@+id/btnAddWindowSave"

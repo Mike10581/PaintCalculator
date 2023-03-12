@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Button addRoom = (Button) findViewById(R.id.btnAddRoom);
         Button addWindow = (Button) findViewById(R.id.btnAddWindow);
+        //TODO add checks for empty room list and block add windows and doors buttons
         Button clear = (Button) findViewById(R.id.btnClear);
         textView = findViewById(R.id.txtRoomsList);
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);

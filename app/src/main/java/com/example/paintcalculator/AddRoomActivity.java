@@ -92,7 +92,7 @@ public class AddRoomActivity extends AppCompatActivity {
                     {
                         rooms = rooms + "~";
                     }
-                    rooms = rooms + roomNumber + ":" + width + ":" + length + ":" + height + ":" + color.toUpperCase() + ":" + title + "," + ",";
+                    rooms = rooms + roomNumber + ":" + width + ":" + length + ":" + height + ":" + color.toUpperCase() + ":" + title + ", " + ", ";
 
                     editor.putString(messageKey, response);
                     editor.putString(roomsKey, rooms);
