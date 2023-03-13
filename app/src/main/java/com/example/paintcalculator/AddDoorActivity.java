@@ -13,14 +13,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class AddWindowActivity extends AppCompatActivity {
+public class AddDoorActivity extends AppCompatActivity {
     Spinner roomSpinner;
     ArrayAdapter<String> spinnerArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_window);
+        setContentView(R.layout.activity_add_door);
 
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -46,21 +46,22 @@ public class AddWindowActivity extends AppCompatActivity {
         roomSpinner.setAdapter(spinnerArrayAdapter);
         roomSpinner.setSelection(roomsQuantity - 1);
 
-        Button saveButton = (Button) findViewById(R.id.btnAddWindowSave);
-        Button cancelButton = (Button) findViewById(R.id.btnAddWindowCancel);
+        Button saveButton = (Button) findViewById(R.id.btnAddDoorSave);
+        Button cancelButton = (Button) findViewById(R.id.btnAddDoorCancel);
 
         SharedPreferences.Editor editor = sharedPref.edit();
+
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText widthFT = (EditText) findViewById(R.id.txtWindowWidthFT);
-                EditText widthInch = (EditText) findViewById(R.id.txtWindowWidthInch);
-                EditText lengthFT = (EditText) findViewById(R.id.txtWindowLengthFT);
-                EditText lengthInch = (EditText) findViewById(R.id.txtWindowLengthInch);
-                EditText quantityPcs = (EditText) findViewById(R.id.txtWindowQuantity);
+                EditText widthFT = (EditText) findViewById(R.id.txtDoorWidthFT);
+                EditText widthInch = (EditText) findViewById(R.id.txtDoorWidthInch);
+                EditText lengthFT = (EditText) findViewById(R.id.txtDoorLengthFT);
+                EditText lengthInch = (EditText) findViewById(R.id.txtDoorLengthInch);
+                EditText quantityPcs = (EditText) findViewById(R.id.txtDoorQuantity);
 
-                EditText trimsWidthInch = (EditText) findViewById(R.id.txtWindowTrimsWidth);
-                EditText trimsColor = (EditText) findViewById(R.id.txtWindowTrimsColor);
+                EditText trimsWidthInch = (EditText) findViewById(R.id.txtDoorTrimsWidth);
+                EditText trimsColor = (EditText) findViewById(R.id.txtDoorTrimsColor);
 
                 int width = 0;
                 int length = 0;
@@ -105,9 +106,9 @@ public class AddWindowActivity extends AppCompatActivity {
                 }
 
                 if (error) {
-                    Toast.makeText(AddWindowActivity.this, "ERROR!!! Missing data.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddDoorActivity.this, "ERROR!!! Missing data.", Toast.LENGTH_SHORT).show();
                 } else {
-                    String response = "Window was added.";
+                    String response = "Door was added.";
 
                     StringBuilder roomsSB = new StringBuilder();
                     for (int i = 0; i < roomsQuantity; i++) {
@@ -116,12 +117,13 @@ public class AddWindowActivity extends AppCompatActivity {
                             StringBuilder roomSB = new StringBuilder();
                             roomSB.append(parsedRoom[0]).append(","); //room info
 
-                            if (!parsedRoom[1].equals(" ")) {
-                                roomSB.append(parsedRoom[1]).append("!"); //room windows if have
-                            }
-                            roomSB.append(width).append(":").append(length).append(":").append(quantity).append(":").append(widthTrims).append(":").append(color.toUpperCase()).append(","); //room new window
+                            roomSB.append(parsedRoom[1]).append(","); //room windows
 
-                            roomSB.append(parsedRoom[2]); //room doors
+                            if (!parsedRoom[2].equals(" ")) {
+                                roomSB.append(parsedRoom[2]).append("!"); //room doors if have
+                            }
+                            roomSB.append(width).append(":").append(length).append(":").append(quantity).append(":").append(widthTrims).append(":").append(color.toUpperCase()); //room new door
+
                             String roomStringForRooms = roomSB.toString();
                             roomsSB.append(roomStringForRooms);
                         } else {

@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPref;
     TextView textView;
 
-    // Handle the result of AddRoomActivity, AddWindowActivity,
+    // Handle the result of AddRoomActivity, AddWindowActivity, AddDoorActivity
     private ActivityResultLauncher<Intent> addDataLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -84,51 +84,49 @@ public class MainActivity extends AppCompatActivity {
                                                     sb.append(windowTrimsWidth).append("\"W, color - ").append(windowTrimsColor).append("\n");
 
                                                 }
-//                                                .append(parsedRoom[1]).append("<-\n");
-
-
-
-
-
-//                                            String[] parsedWindows = parsedRoom[1].split("!");
                                             }
 
                                             if (parsedRoom[2].length() > 1) {
-                                                sb.append("Doors->").append(parsedRoom[2]).append("<-\n");
-//                                            String[] parsedDoors = parsedRoom[2].split("!");
+                                                sb.append("* Doors:").append("\n");
+
+                                                String[] door = parsedRoom[2].split("!");
+                                                for (String el : door) {
+                                                    String[] parsedDoorInfo = el.split(":");
+                                                    int doorWidth = Integer.parseInt(parsedDoorInfo[0]);
+                                                    int doorLength = Integer.parseInt(parsedDoorInfo[1]);
+                                                    int doorQuantity = Integer.parseInt(parsedDoorInfo[2]);
+                                                    int doorTrimsWidth = Integer.parseInt(parsedDoorInfo[3]);
+                                                    String doorTrimsColor = parsedDoorInfo[4];
+                                                    sb.append("  - Size: ");
+                                                    sb.append(doorWidth / 12).append("' ").append(doorWidth % 12).append("\"W x ");
+                                                    sb.append(doorLength / 12).append("' ").append(doorLength % 12).append("\"L - ");
+                                                    sb.append(doorQuantity).append("pcs.\n");
+                                                    sb.append("  - Trims: ");
+                                                    sb.append(doorTrimsWidth).append("\"W, color - ").append(doorTrimsColor).append("\n");
+                                                }
                                             }
                                         }
-
-
 
                                         sb.append("\n");
 
                                     }
 
                                 }
-//                                String[] parsedKey = entry.getKey().split(":");
-//                                if (parsedKey[0].equals("COLOR")) {
-//                                    sb.append(parsedKey[0]).append(" - ").append(parsedKey[1]).append("\n\n");
-//                                } else if (parsedKey[0].equals("ROOM")) {
-//                                    String[] parsedValue = entry.getValue().toString().split(":");
-//                                    sb.append(parsedKey[0]).append(" - ").append(parsedKey[1]).append("\n")
-//                                            .append("- ").append(parsedValue[0]).append("W x ")
-//                                            .append(parsedValue[1]).append("L x ")
-//                                            .append(parsedValue[2]).append("H (inch)\n").append("- color: ").append(parsedValue[3]).append("\n\n");
-//                                } else {
-//                                    sb.append("! - ").append(entry.getKey()).append(": ").append(entry.getValue().toString()).append("\n\n");
-//                                }
-//
+
                                 sb.append("\n\n* - ").append(entry.getKey()).append("-> ").append(entry.getValue().toString()).append("\n\n");
                             }
 
                         }
+
                         String store = sb.toString();
 
                         textView.setText(store);
-
-                        Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
-
+                        if (!message.equals("")) {
+                            Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            editor.remove("MESSAGE");
+                            editor.commit();
+                        }
                     }
                 }
             });
@@ -140,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Button addRoom = (Button) findViewById(R.id.btnAddRoom);
         Button addWindow = (Button) findViewById(R.id.btnAddWindow);
+        Button addDoor = (Button) findViewById(R.id.btnAddDoor);
         //TODO add checks for empty room list and block add windows and doors buttons
         Button clear = (Button) findViewById(R.id.btnClear);
         textView = findViewById(R.id.txtRoomsList);
@@ -160,19 +159,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        addDoor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AddDoorActivity.class);
+                addDataLauncher.launch(intent);
+            }
+        });
+
+
 
         Map<String, ?> dataset = sharedPref.getAll();
-
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<String, ?> entry : dataset.entrySet()) {
             if (!entry.getKey().equals("MESSAGE")) {
                 sb.append(entry.getKey()).append(": ").append(entry.getValue().toString()).append("\n");
             }
-
         }
         String store = sb.toString();
 
         textView.setText(store);
+
+
 
 
         clear.setOnClickListener(new View.OnClickListener() {

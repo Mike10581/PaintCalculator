@@ -6,6 +6,8 @@
     <string name="btnAddRoom">Add Room</string>
     <string name="txtAddWindow">Adding window…</string>
     <string name="btnAddWindow">Add window</string>
+    <string name="txtAddDoor">Adding door…</string>
+    <string name="btnAddDoor">Add door</string>
     <string name="lblHeight">Height:</string>
     <string name="lblWidth">Width:</string>
     <string name="lblLength">Length:</string>
@@ -20,5 +22,5 @@
     <string name="btnClear">Clear</string>
     <string name="lblRoomTitle">Enter title for the room</string>
     <string name="promptRoom">Chose the room</string>
-    <string name="lblForTheRoom">for the room</string>
+    <string name="lblForTheRoom">For the room:</string>
 </resources>

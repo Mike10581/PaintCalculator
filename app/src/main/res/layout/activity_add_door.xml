@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".AddWindowActivity">
+    tools:context=".AddDoorActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,12 +17,12 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txtAddWindow"
+                android:id="@+id/txtAddDoor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FF6200EE"
                 android:gravity="center_horizontal"
-                android:text="@string/txtAddWindow"
+                android:text="@string/txtAddDoor"
                 android:textColor="#FFFFFF"
                 android:textSize="34sp"
                 android:padding="10sp"
@@ -35,7 +35,7 @@
                 android:gravity="end">
 
                 <TextView
-                    android:id="@+id/lblWindowWidth"
+                    android:id="@+id/lblDoorWidth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="30dp"
@@ -44,7 +44,7 @@
                     android:textSize="20sp" />
 
                 <EditText
-                    android:id="@+id/txtWindowWidthFT"
+                    android:id="@+id/txtDoorWidthFT"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="4"
@@ -52,14 +52,14 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/lblWindowWidthFT"
+                    android:id="@+id/lblDoorWidthFT"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lblFT"
                     android:textSize="20sp" />
 
                 <EditText
-                    android:id="@+id/txtWindowWidthInch"
+                    android:id="@+id/txtDoorWidthInch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="2"
@@ -67,7 +67,7 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/lblWindowWidthInch"
+                    android:id="@+id/lblDoorWidthInch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lblInch"
@@ -81,7 +81,7 @@
                 android:gravity="end">
 
                 <TextView
-                    android:id="@+id/lblWindowLength"
+                    android:id="@+id/lblDoorLength"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="30dp"
@@ -90,7 +90,7 @@
                     android:textSize="20sp" />
 
                 <EditText
-                    android:id="@+id/txtWindowLengthFT"
+                    android:id="@+id/txtDoorLengthFT"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="4"
@@ -98,14 +98,14 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/lblWindowLengthFT"
+                    android:id="@+id/lblDoorLengthFT"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lblFT"
                     android:textSize="20sp" />
 
                 <EditText
-                    android:id="@+id/txtWindowLengthInch"
+                    android:id="@+id/txtDoorLengthInch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="2"
@@ -113,7 +113,7 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/lblWindowLengthInch"
+                    android:id="@+id/lblDoorLengthInch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lblInch"
@@ -127,7 +127,7 @@
                 android:gravity="end">
 
                 <TextView
-                    android:id="@+id/lblWindowQuantity"
+                    android:id="@+id/lblDoorQuantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="30dp"
@@ -136,7 +136,7 @@
                     android:textSize="20sp" />
 
                 <EditText
-                    android:id="@+id/txtWindowQuantity"
+                    android:id="@+id/txtDoorQuantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="3"
@@ -144,7 +144,7 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/lblWindowPcs"
+                    android:id="@+id/lblDoorPcs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lblPcs"
@@ -152,7 +152,7 @@
             </TableRow>
 
             <TextView
-                android:id="@+id/lblWindowTrims"
+                android:id="@+id/lblDoorTrims"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10sp"
@@ -170,7 +170,7 @@
                 android:gravity="end">
 
                 <TextView
-                    android:id="@+id/lblWindowTrimsWidth"
+                    android:id="@+id/lblDoorTrimsWidth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="30dp"
@@ -179,7 +179,7 @@
                     android:textSize="20sp" />
 
                 <EditText
-                    android:id="@+id/txtWindowTrimsWidth"
+                    android:id="@+id/txtDoorTrimsWidth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="2"
@@ -187,7 +187,7 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/lblWindowTrimsWidthInches"
+                    android:id="@+id/lblDoorTrimsWidthInches"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lblInch"
@@ -201,7 +201,7 @@
                 android:gravity="end">
 
                 <EditText
-                    android:id="@+id/txtWindowTrimsColor"
+                    android:id="@+id/txtDoorTrimsColor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="11"
@@ -211,7 +211,7 @@
 
             </TableRow>
             <TextView
-                android:id="@+id/lblWindowToRoom"
+                android:id="@+id/lblDoorToRoom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10sp"
@@ -237,7 +237,7 @@
                 android:gravity="center_horizontal">
 
                 <Button
-                    android:id="@+id/btnAddWindowSave"
+                    android:id="@+id/btnAddDoorSave"
                     style="@style/Widget.AppCompat.Button"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
@@ -246,7 +246,7 @@
                     android:textSize="24sp" />
 
                 <Button
-                    android:id="@+id/btnAddWindowCancel"
+                    android:id="@+id/btnAddDoorCancel"
                     style="@style/Widget.AppCompat.Button"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
@@ -256,5 +256,4 @@
             </TableRow>
         </LinearLayout>
     </ScrollView>
-
 </LinearLayout>
