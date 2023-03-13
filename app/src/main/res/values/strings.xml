@@ -19,7 +19,7 @@
     <string name="btnSave">Save</string>
     <string name="btnCancel">Cancel</string>
     <string name="lblColor">Paint color:</string>
-    <string name="btnClear">Clear</string>
+    <string name="btnClear">Delete all</string>
     <string name="lblRoomTitle">Enter title for the room</string>
     <string name="promptRoom">Chose the room</string>
     <string name="lblForTheRoom">For the room:</string>

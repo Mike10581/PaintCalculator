@@ -25,6 +25,7 @@
                 android:text="@string/txtAddRoom"
                 android:textColor="#FFFFFF"
                 android:textSize="34sp"
+                android:padding="10sp"
                 android:textStyle="bold" />
 
             <EditText
@@ -198,25 +199,27 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_horizontal" >
+                android:gravity="center_horizontal"
+                android:layout_marginTop="20sp">
 
                 <Button
                     android:id="@+id/btnAddRoomSave"
                     style="@style/Widget.AppCompat.Button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="140dp"
                     android:layout_height="wrap_content"
                     android:text="@string/btnSave"
-                    android:textSize="18sp"
-                    tools:layout_editor_absoluteX="160dp"
-                    tools:layout_editor_absoluteY="50dp" />
+                    android:textSize="24sp"
+                    android:layout_marginEnd="5sp" />
 
                 <Button
                     android:id="@+id/btnAddRoomCancel"
                     style="@style/Widget.AppCompat.Button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="140dp"
                     android:layout_height="wrap_content"
                     android:text="@string/btnCancel"
-                    android:textSize="18sp" />
+                    android:textSize="24sp"
+                    android:layout_marginStart="5sp" />
+
             </TableRow>
         </LinearLayout>
     </ScrollView>
