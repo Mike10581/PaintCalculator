@@ -2,7 +2,6 @@ package com.example.paintcalculator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -11,14 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.json.JSONObject;
-
-import java.io.StringWriter;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-
-//TODO add removing ~ and : from text inputs
 public class AddRoomActivity extends AppCompatActivity {
 
     @Override
@@ -70,9 +61,8 @@ public class AddRoomActivity extends AppCompatActivity {
                     height += Integer.parseInt(heightInch.getText().toString());
                 } catch (Exception e) {}
 
-
-                String color = roomColor.getText().toString();
-                String title = roomTitle.getText().toString();
+                String color = roomColor.getText().toString().replaceAll("[~!:,]","");
+                String title = roomTitle.getText().toString().replaceAll("[~!:,]","");;
 
                 boolean error = color.equals("") || width == 0 || length == 0 || height == 0 || title.length() == 0;
 
@@ -99,8 +89,6 @@ public class AddRoomActivity extends AppCompatActivity {
                     editor.putInt(roomsAmountKey, roomNumber);
                     editor.commit();
 
-//                    Intent intent = new Intent();
-//                    setResult(RESULT_OK, intent);
                     finish();
                 }
 
@@ -110,8 +98,6 @@ public class AddRoomActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent();
-//                setResult(RESULT_OK, intent);
                 finish();
             }
         });

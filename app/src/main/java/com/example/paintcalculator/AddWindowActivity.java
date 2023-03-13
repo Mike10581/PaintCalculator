@@ -2,7 +2,6 @@ package com.example.paintcalculator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -95,7 +94,8 @@ public class AddWindowActivity extends AppCompatActivity {
                 } catch (Exception e) {
                 }
 
-                String color = trimsColor.getText().toString();
+                String color = trimsColor.getText().toString().replaceAll("[~!:,]","");
+
                 boolean error = color.equals("") || width == 0 || length == 0 || quantity == 0 || widthTrims == 0;
                 int roomIndex = 0;
                 try {
@@ -140,8 +140,6 @@ public class AddWindowActivity extends AppCompatActivity {
                     editor.putString(roomsKey, roomsStringForShared);
                     editor.commit();
 
-//                    Intent intent = new Intent();
-//                    setResult(RESULT_OK, intent);
                     finish();
                 }
             }
@@ -150,8 +148,6 @@ public class AddWindowActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent();
-//                setResult(RESULT_OK, intent);
                 finish();
             }
         });
