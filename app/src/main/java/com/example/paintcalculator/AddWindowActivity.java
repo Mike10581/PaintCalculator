@@ -140,8 +140,8 @@ public class AddWindowActivity extends AppCompatActivity {
                     editor.putString(roomsKey, roomsStringForShared);
                     editor.commit();
 
-                    Intent intent = new Intent();
-                    setResult(RESULT_OK, intent);
+//                    Intent intent = new Intent();
+//                    setResult(RESULT_OK, intent);
                     finish();
                 }
             }
@@ -150,8 +150,8 @@ public class AddWindowActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                setResult(RESULT_OK, intent);
+//                Intent intent = new Intent();
+//                setResult(RESULT_OK, intent);
                 finish();
             }
         });

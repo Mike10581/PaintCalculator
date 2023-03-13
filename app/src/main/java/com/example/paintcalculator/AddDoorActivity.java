@@ -142,8 +142,8 @@ public class AddDoorActivity extends AppCompatActivity {
                     editor.putString(roomsKey, roomsStringForShared);
                     editor.commit();
 
-                    Intent intent = new Intent();
-                    setResult(RESULT_OK, intent);
+//                    Intent intent = new Intent();
+//                    setResult(RESULT_OK, intent);
                     finish();
                 }
             }
@@ -152,8 +152,8 @@ public class AddDoorActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                setResult(RESULT_OK, intent);
+//                Intent intent = new Intent();
+//                setResult(RESULT_OK, intent);
                 finish();
             }
         });

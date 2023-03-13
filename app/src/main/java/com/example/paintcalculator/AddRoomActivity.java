@@ -99,8 +99,8 @@ public class AddRoomActivity extends AppCompatActivity {
                     editor.putInt(roomsAmountKey, roomNumber);
                     editor.commit();
 
-                    Intent intent = new Intent();
-                    setResult(RESULT_OK, intent);
+//                    Intent intent = new Intent();
+//                    setResult(RESULT_OK, intent);
                     finish();
                 }
 
@@ -110,8 +110,8 @@ public class AddRoomActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                setResult(RESULT_OK, intent);
+//                Intent intent = new Intent();
+//                setResult(RESULT_OK, intent);
                 finish();
             }
         });
