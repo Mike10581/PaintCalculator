@@ -5,7 +5,6 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.ColorUtils;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -128,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
 
         tblRoomsLayout.removeAllViews();
 
-        //TODO hide Windows and Doors titles if data are empty or add line that going to show text that section is empty
         if (!sharedPref.getString("ROOMS", "").equals("")) {
             String[] parsedRooms = sharedPref.getString("ROOMS", "").split("~");
 
@@ -176,6 +174,14 @@ public class MainActivity extends AppCompatActivity {
                 roomInfoLayout.removeAllViews();
 
                 // create cells
+                final TextView tvRoomColorTitle = new TextView(this);
+                tvRoomColorTitle.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+                tvRoomColorTitle.setGravity(Gravity.RIGHT);
+                tvRoomColorTitle.setPadding(10, 20, 10, 20);
+                tvRoomColorTitle.setTypeface(null, Typeface.BOLD);
+                tvRoomColorTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
+                tvRoomColorTitle.setText("Color");
+
                 final TextView tvRoomWidthTitle = new TextView(this);
                 tvRoomWidthTitle.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
                 tvRoomWidthTitle.setGravity(Gravity.RIGHT);
@@ -200,14 +206,6 @@ public class MainActivity extends AppCompatActivity {
                 tvRoomHeightTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 tvRoomHeightTitle.setText("Height");
 
-                final TextView tvRoomColorTitle = new TextView(this);
-                tvRoomColorTitle.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-                tvRoomColorTitle.setGravity(Gravity.RIGHT);
-                tvRoomColorTitle.setPadding(10, 20, 10, 20);
-                tvRoomColorTitle.setTypeface(null, Typeface.BOLD);
-                tvRoomColorTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
-                tvRoomColorTitle.setText("Color");
-
                 // create row
                 final TableRow trRoomInfoTitle = new TableRow(this);
 //                        trRoomInfoTitle.setId(i + 1);
@@ -218,10 +216,10 @@ public class MainActivity extends AppCompatActivity {
                 trRoomInfoTitle.setLayoutParams(trRoomInfoParamsTitle);
 
                 // add cells to row
+                trRoomInfoTitle.addView(tvRoomColorTitle);
                 trRoomInfoTitle.addView(tvRoomWidthTitle);
                 trRoomInfoTitle.addView(tvRoomLengthTitle);
                 trRoomInfoTitle.addView(tvRoomHeightTitle);
-                trRoomInfoTitle.addView(tvRoomColorTitle);
 
                 // add row to table
                 roomInfoLayout.addView(trRoomInfoTitle, trRoomInfoParamsTitle);
@@ -233,6 +231,17 @@ public class MainActivity extends AppCompatActivity {
                 String color = parsedInfo[4];
 
                 // create cells
+                final TextView tvRoomColor = new TextView(this);
+                tvRoomColor.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+                tvRoomColor.setGravity(Gravity.RIGHT);
+                tvRoomColor.setPadding(10, 5, 10, 5);
+                tvRoomColor.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
+                tvRoomColor.setText(color);
+                tvRoomColor.setTextColor(getContrastingColor(Color.parseColor(color)));
+                tvRoomColor.setBackgroundResource(R.drawable.border);
+                GradientDrawable drawableRoom = (GradientDrawable) tvRoomColor.getBackground();
+                drawableRoom.setColor(Color.parseColor(color));
+
                 final TextView tvRoomWidth = new TextView(this);
                 tvRoomWidth.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
                 tvRoomWidth.setGravity(Gravity.RIGHT);
@@ -254,17 +263,6 @@ public class MainActivity extends AppCompatActivity {
                 tvRoomHeight.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 tvRoomHeight.setText(String.valueOf(height / 12 + "' " + height % 12 + "\""));
 
-                final TextView tvRoomColor = new TextView(this);
-                tvRoomColor.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-                tvRoomColor.setGravity(Gravity.RIGHT);
-                tvRoomColor.setPadding(10, 5, 10, 5);
-                tvRoomColor.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
-                tvRoomColor.setText(color);
-                tvRoomColor.setTextColor(getContrastingColor(Color.parseColor(color)));
-                tvRoomColor.setBackgroundResource(R.drawable.border);
-                GradientDrawable drawableRoom = (GradientDrawable) tvRoomColor.getBackground();
-                drawableRoom.setColor(Color.parseColor(color));
-
                 // create row
                 final TableRow trRoomInfo = new TableRow(this);
 //                        trRoomInfo.setId(i + 1);
@@ -274,10 +272,11 @@ public class MainActivity extends AppCompatActivity {
                 trRoomInfo.setLayoutParams(trRoomInfoParams);
 
                 // add cells to row
+                trRoomInfo.addView(tvRoomColor);
                 trRoomInfo.addView(tvRoomWidth);
                 trRoomInfo.addView(tvRoomLength);
                 trRoomInfo.addView(tvRoomHeight);
-                trRoomInfo.addView(tvRoomColor);
+
 
                 // add row to table
                 roomInfoLayout.addView(trRoomInfo, trRoomInfoParams);
@@ -395,14 +394,6 @@ public class MainActivity extends AppCompatActivity {
                         tvWindowTrimColorTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                         tvWindowTrimColorTitle.setText("Trims");
 
-//                        final TextView tvWindowTrimWidthTitle = new TextView(this);
-//                        tvWindowTrimWidthTitle.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-//                        tvWindowTrimWidthTitle.setGravity(Gravity.LEFT);
-//                        tvWindowTrimWidthTitle.setPadding(10, 20, 10, 20);
-//                        tvWindowTrimWidthTitle.setTypeface(null, Typeface.BOLD);
-//                        tvWindowTrimWidthTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
-//                        tvWindowTrimWidthTitle.setText("W");
-
                         // create row
                         final TableRow trWindowInfoTitle = new TableRow(this);
 //                        trWindowInfoTitle.setId(i + 1);
@@ -417,7 +408,6 @@ public class MainActivity extends AppCompatActivity {
                         trWindowInfoTitle.addView(tvWindowLengthTitle);
                         trWindowInfoTitle.addView(tvWindowQuantityTitle);
                         trWindowInfoTitle.addView(tvWindowTrimColorTitle);
-//                        trWindowInfoTitle.addView(tvWindowTrimWidthTitle);
 
                         // add row to table
                         windowInfoLayout.addView(trWindowInfoTitle, trWindowInfoParamsTitle);
@@ -466,13 +456,6 @@ public class MainActivity extends AppCompatActivity {
                             GradientDrawable drawableWindow = (GradientDrawable) tvWindowTrimColor.getBackground();
                             drawableWindow.setColor(Color.parseColor(colorWindow));
 
-//                            final TextView tvWindowTrimWidth = new TextView(this);
-//                            tvWindowTrimWidth.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-//                            tvWindowTrimWidth.setGravity(Gravity.LEFT);
-//                            tvWindowTrimWidth.setPadding(10, 5, 10, 5);
-//                            tvWindowTrimWidth.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
-//                            tvWindowTrimWidth.setText(String.valueOf(widthTrimWindow + "\""));
-
                             // create row
                             final TableRow trWindowInfo = new TableRow(this);
 //                        trWindowInfo.setId(i + 1);
@@ -486,7 +469,6 @@ public class MainActivity extends AppCompatActivity {
                             trWindowInfo.addView(tvWindowLength);
                             trWindowInfo.addView(tvWindowQuantity);
                             trWindowInfo.addView(tvWindowTrimColor);
-//                            trWindowInfo.addView(tvWindowTrimWidth);
 
                             // add row to table
                             windowInfoLayout.addView(trWindowInfo, trWindowInfoParams);
@@ -528,13 +510,6 @@ public class MainActivity extends AppCompatActivity {
                         tvDoorTrimColorTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                         tvDoorTrimColorTitle.setText("Trims");
 
-//                        final TextView tvDoorTrimWidthTitle = new TextView(this);
-//                        tvDoorTrimWidthTitle.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-//                        tvDoorTrimWidthTitle.setGravity(Gravity.RIGHT);
-//                        tvDoorTrimWidthTitle.setPadding(10, 20, 10, 20);
-//                        tvDoorTrimWidthTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
-//                        tvDoorTrimWidthTitle.setText("Trim width");
-
                         // create row
                         final TableRow trDoorInfoTitle = new TableRow(this);
 //                        trDoorInfoTitle.setId(i + 1);
@@ -549,7 +524,6 @@ public class MainActivity extends AppCompatActivity {
                         trDoorInfoTitle.addView(tvDoorLengthTitle);
                         trDoorInfoTitle.addView(tvDoorQuantityTitle);
                         trDoorInfoTitle.addView(tvDoorTrimColorTitle);
-//                        trDoorInfoTitle.addView(tvDoorTrimWidthTitle);
 
                         // add row to table
                         doorInfoLayout.addView(trDoorInfoTitle, trDoorInfoParamsTitle);
@@ -598,13 +572,6 @@ public class MainActivity extends AppCompatActivity {
                             GradientDrawable drawableDoor = (GradientDrawable) tvDoorTrimColor.getBackground();
                             drawableDoor.setColor(Color.parseColor(colorDoor));
 
-//                            final TextView tvDoorTrimWidth = new TextView(this);
-//                            tvDoorTrimWidth.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-//                            tvDoorTrimWidth.setGravity(Gravity.RIGHT);
-//                            tvDoorTrimWidth.setPadding(10, 20, 10, 20);
-//                            tvDoorTrimWidth.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
-//                            tvDoorTrimWidth.setText(String.valueOf(widthTrimDoor + "\""));
-
                             // create row
                             final TableRow trDoorInfo = new TableRow(this);
 //                        trDoorInfo.setId(i + 1);
@@ -618,7 +585,6 @@ public class MainActivity extends AppCompatActivity {
                             trDoorInfo.addView(tvDoorLength);
                             trDoorInfo.addView(tvDoorQuantity);
                             trDoorInfo.addView(tvDoorTrimColor);
-//                            trDoorInfo.addView(tvDoorTrimWidth);
 
                             // add row to table
                             doorInfoLayout.addView(trDoorInfo, trDoorInfoParams);
