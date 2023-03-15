@@ -2,7 +2,11 @@ package com.example.paintcalculator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -11,16 +15,21 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class AddRoomActivity extends AppCompatActivity {
+    SharedPreferences sharedPref;
+    Button selectColorButton;
+    String color;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_room);
 
-        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         Button saveButton = (Button) findViewById(R.id.btnAddRoomSave);
         Button cancelButton = (Button) findViewById(R.id.btnAddRoomCancel);
+
+        selectColorButton = (Button) findViewById(R.id.btnSelectColor);
 
         SharedPreferences.Editor editor = sharedPref.edit();
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -32,7 +41,6 @@ public class AddRoomActivity extends AppCompatActivity {
                 EditText lengthInch = (EditText) findViewById(R.id.txtRoomLengthInch);
                 EditText heightFT = (EditText) findViewById(R.id.txtRoomHeightFT);
                 EditText heightInch = (EditText) findViewById(R.id.txtRoomHeightInch);
-                EditText roomColor = (EditText) findViewById(R.id.txtRoomColor);
                 EditText roomTitle = (EditText) findViewById(R.id.txtRoomTitle);
 
                 int width = 0;
@@ -41,28 +49,33 @@ public class AddRoomActivity extends AppCompatActivity {
 
                 try {
                     width += Integer.parseInt(widthFT.getText().toString()) * 12;
-                } catch (Exception e) {}
+                } catch (Exception e) {
+                }
                 try {
                     width += Integer.parseInt(widthInch.getText().toString());
-                } catch (Exception e) {}
+                } catch (Exception e) {
+                }
 
                 try {
                     length += Integer.parseInt(lengthFT.getText().toString()) * 12;
-                } catch (Exception e) {}
+                } catch (Exception e) {
+                }
                 try {
                     length += Integer.parseInt(lengthInch.getText().toString());
-                } catch (Exception e) {}
+                } catch (Exception e) {
+                }
 
                 try {
                     height += Integer.parseInt(heightFT.getText().toString()) * 12;
-                } catch (Exception e) {}
+                } catch (Exception e) {
+                }
 
-                 try {
+                try {
                     height += Integer.parseInt(heightInch.getText().toString());
-                } catch (Exception e) {}
+                } catch (Exception e) {
+                }
 
-                String color = roomColor.getText().toString().replaceAll("[~!:,]","");
-                String title = roomTitle.getText().toString().replaceAll("[~!:,]","");;
+                String title = roomTitle.getText().toString().replaceAll("[~!:,]", "");
 
                 boolean error = color.equals("") || width == 0 || length == 0 || height == 0 || title.length() == 0;
 
@@ -78,15 +91,16 @@ public class AddRoomActivity extends AppCompatActivity {
                     int roomNumber = sharedPref.getInt(roomsAmountKey, 0) + 1;
                     String rooms = sharedPref.getString(roomsKey, "");
 
-                    if (rooms.length()>0)
-                    {
+                    if (rooms.length() > 0) {
                         rooms = rooms + "~";
                     }
-                    rooms = rooms + roomNumber + ":" + width + ":" + length + ":" + height + ":" + color.toUpperCase() + ":" + title + ", " + ", ";
+
+                    rooms = rooms + roomNumber + ":" + width + ":" + length + ":" + height + ":" + color + ":" + title + ", " + ", ";
 
                     editor.putString(messageKey, response);
                     editor.putString(roomsKey, rooms);
                     editor.putInt(roomsAmountKey, roomNumber);
+                    editor.remove("SET_COLOR");
                     editor.commit();
 
                     finish();
@@ -102,5 +116,25 @@ public class AddRoomActivity extends AppCompatActivity {
             }
         });
 
+        selectColorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AddRoomActivity.this, ColorSelectorActivity.class));
+            }
+        });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        color = sharedPref.getString("SET_COLOR", "");
+        if (!color.equals("")) {
+            Drawable buttonIcon = selectColorButton.getCompoundDrawables()[0];
+            if (buttonIcon != null) {
+                buttonIcon.setColorFilter(Color.parseColor(color), PorterDuff.Mode.SRC_ATOP);
+                selectColorButton.setCompoundDrawables( null, buttonIcon, null, null);
+            }
+        }
     }
 }

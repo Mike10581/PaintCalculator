@@ -2,7 +2,11 @@ package com.example.paintcalculator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -15,13 +19,16 @@ import android.widget.Toast;
 public class AddWindowActivity extends AppCompatActivity {
     Spinner roomSpinner;
     ArrayAdapter<String> spinnerArrayAdapter;
+    SharedPreferences sharedPref;
+    Button selectColorButton;
+    String color;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_window);
 
-        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         String rooms = sharedPref.getString("ROOMS", "");
 
@@ -48,6 +55,8 @@ public class AddWindowActivity extends AppCompatActivity {
         Button saveButton = (Button) findViewById(R.id.btnAddWindowSave);
         Button cancelButton = (Button) findViewById(R.id.btnAddWindowCancel);
 
+        selectColorButton = (Button) findViewById(R.id.btnWindowTrimsColor);
+
         SharedPreferences.Editor editor = sharedPref.edit();
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +68,7 @@ public class AddWindowActivity extends AppCompatActivity {
                 EditText quantityPcs = (EditText) findViewById(R.id.txtWindowQuantity);
 
                 EditText trimsWidthInch = (EditText) findViewById(R.id.txtWindowTrimsWidth);
-                EditText trimsColor = (EditText) findViewById(R.id.txtWindowTrimsColor);
+//                EditText trimsColor = (EditText) findViewById(R.id.txtWindowTrimsColor);
 
                 int width = 0;
                 int length = 0;
@@ -94,7 +103,7 @@ public class AddWindowActivity extends AppCompatActivity {
                 } catch (Exception e) {
                 }
 
-                String color = trimsColor.getText().toString().replaceAll("[~!:,]","");
+//                String color = trimsColor.getText().toString().replaceAll("[~!:,]","");
 
                 boolean error = color.equals("") || width == 0 || length == 0 || quantity == 0 || widthTrims == 0;
                 int roomIndex = 0;
@@ -138,6 +147,7 @@ public class AddWindowActivity extends AppCompatActivity {
 
                     editor.putString(messageKey, response);
                     editor.putString(roomsKey, roomsStringForShared);
+                    editor.remove("SET_COLOR");
                     editor.commit();
 
                     finish();
@@ -151,5 +161,26 @@ public class AddWindowActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        selectColorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AddWindowActivity.this, ColorSelectorActivity.class));
+            }
+        });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        color = sharedPref.getString("SET_COLOR", "");
+        if (!color.equals("")) {
+            Drawable buttonIcon = selectColorButton.getCompoundDrawables()[0];
+            if (buttonIcon != null) {
+                buttonIcon.setColorFilter(Color.parseColor(color), PorterDuff.Mode.SRC_ATOP);
+                selectColorButton.setCompoundDrawables( null, buttonIcon, null, null);
+            }
+        }
     }
 }

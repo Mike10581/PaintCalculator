@@ -183,16 +183,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="10sp"
+                android:gravity="end"/>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10sp"
                 android:gravity="end">
 
-                <EditText
-                    android:id="@+id/txtRoomColor"
+                <TextView
+                    android:id="@+id/lblColorCode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ems="11"
-                    android:hint="@string/lblColor"
-                    android:inputType="textPersonName"
+                    android:text="@string/lblColor"
                     android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/btnSelectColor"
+                    style="@style/Widget.Material3.Button.IconButton.Outlined"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5sp"
+                    android:paddingLeft="13dp"
+                    android:paddingTop="0dp"
+                    android:paddingRight="13dp"
+                    android:paddingBottom="0dp"
+                    android:textSize="20sp"
+                    app:cornerRadius="2sp"
+                    app:icon="@color/white"
+                    app:iconTint="#FFFFFF"
+                    app:strokeColor="#FF6200EE"
+                    app:strokeWidth="2dp" />
 
             </TableRow>
 

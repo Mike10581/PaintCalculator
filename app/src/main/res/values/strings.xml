@@ -8,6 +8,7 @@
     <string name="btnAddWindow">Add window</string>
     <string name="txtAddDoor">Adding door…</string>
     <string name="btnAddDoor">Add door</string>
+    <string name="txtSelectColor">Select color</string>
     <string name="txtDelete">Deleting…</string>
     <string name="lblHeight">Height:</string>
     <string name="lblWidth">Width:</string>
@@ -20,6 +21,7 @@
     <string name="btnSave">Save</string>
     <string name="btnCancel">Cancel</string>
     <string name="btnDelete">Delete</string>
+    <string name="btnSelect">Select</string>
     <string name="lblColor">Paint color:</string>
     <string name="btnClear">Delete all</string>
     <string name="lblRoomTitle">Enter title for the room</string>
