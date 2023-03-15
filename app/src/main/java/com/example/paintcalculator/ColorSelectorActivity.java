@@ -244,7 +244,7 @@ public class ColorSelectorActivity extends AppCompatActivity {
                     blueString = "0" + blueString;
                 }
 
-                editor.putString("SET_COLOR", "#" + redString + greenString + blueString);
+                editor.putString("SET_COLOR", "#" + redString.toUpperCase() + greenString.toUpperCase() + blueString.toUpperCase());
                 editor.commit();
                 finish();
             }
