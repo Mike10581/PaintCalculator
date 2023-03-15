@@ -67,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
         addRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("SET_COLOR", "#FFFFFF");
+                editor.commit();
                 startActivity(new Intent(MainActivity.this, AddRoomActivity.class));
             }
         });
@@ -633,10 +636,16 @@ public class MainActivity extends AppCompatActivity {
 
                 tblRoomsLayout.addView(roomTitleLayout, tbTitleTableParams);
                 tblRoomsLayout.addView(roomInfoLayout, tbTablesParams);
-                tblRoomsLayout.addView(windowTitleLayout, tbTablesParams);
-                tblRoomsLayout.addView(windowInfoLayout, tbTablesParams);
-                tblRoomsLayout.addView(doorTitleLayout, tbTablesParams);
-                tblRoomsLayout.addView(doorInfoLayout, tbTablesParams);
+                if (parsedRoom.length > 1) {
+                    if (parsedRoom[1].length() > 1) {
+                        tblRoomsLayout.addView(windowTitleLayout, tbTablesParams);
+                        tblRoomsLayout.addView(windowInfoLayout, tbTablesParams);
+                    }
+                    if (parsedRoom[2].length() > 1) {
+                        tblRoomsLayout.addView(doorTitleLayout, tbTablesParams);
+                        tblRoomsLayout.addView(doorInfoLayout, tbTablesParams);
+                    }
+                }
                 tblRoomsLayout.addView(roomFooterLayout, tbTablesParams);
 
 //                        if (i > -1) {
