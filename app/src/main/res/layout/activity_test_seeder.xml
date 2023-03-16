@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".TestSeederActivity">
+    <TextView
+        android:id="@+id/txtSeeding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FF6200EE"
+        android:gravity="center_horizontal"
+        android:text="@string/txtSeeding"
+        android:textColor="#FFFFFF"
+        android:textSize="34sp"
+        android:padding="10sp"
+        android:textStyle="bold" />
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="20sp">
+
+        <Button
+            android:id="@+id/btnSeed"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:text="@string/btnSeed"
+            android:textSize="24sp"
+            android:layout_marginEnd="5sp" />
+
+        <Button
+            android:id="@+id/btnSeedCancel"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:text="@string/btnCancel"
+            android:textSize="24sp"
+            android:layout_marginStart="5sp" />
+
+    </TableRow>
+</LinearLayout>

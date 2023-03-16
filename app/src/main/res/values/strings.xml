@@ -8,6 +8,10 @@
     <string name="btnAddWindow">Add window</string>
     <string name="txtAddDoor">Adding door…</string>
     <string name="btnAddDoor">Add door</string>
+    <string name="btnCalculate">Calculate</string>
+    <string name="txtSeeding">Seeding…</string>
+    <string name="btnSeedTestData">Seed test data</string>
+    <string name="btnSeed">Seed</string>
     <string name="txtSelectColor">Select color</string>
     <string name="txtDelete">Deleting…</string>
     <string name="lblHeight">Height:</string>

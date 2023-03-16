@@ -25,8 +25,13 @@ import android.widget.Toast;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    //TODO remove reading all keys and values and read only needed
     SharedPreferences sharedPref;
+    SharedPreferences.Editor editor;
+    Button addWindow;
+    Button addDoor;
+    Button clear;
+    Button calculate;
+    Button seeder;
 
     public static int getContrastingColor(int color) {
         int red = Color.red(color);
@@ -47,12 +52,14 @@ public class MainActivity extends AppCompatActivity {
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == RESULT_OK) {
 
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        Map<String, ?> dataset = sharedPref.getAll();
-                        for (Map.Entry<String, ?> entry : dataset.entrySet()) {
-                            editor.remove(entry.getKey());
-                        }
+                        editor.remove("ROOMS");
+                        editor.remove("ROOMS_AMOUNT");
                         editor.commit();
+                        addWindow.setEnabled(false);
+                        addDoor.setEnabled(false);
+                        clear.setEnabled(false);
+                        calculate.setEnabled(false);
+                        seeder.setEnabled(true);
                         tblRoomsLayout.removeAllViews();
                     }
                 }
@@ -64,16 +71,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button addRoom = (Button) findViewById(R.id.btnAddRoom);
-        Button addWindow = (Button) findViewById(R.id.btnAddWindow);
-        Button addDoor = (Button) findViewById(R.id.btnAddDoor);
+        addWindow = (Button) findViewById(R.id.btnAddWindow);
+        addDoor = (Button) findViewById(R.id.btnAddDoor);
+        clear = (Button) findViewById(R.id.btnClear);
+        calculate = (Button) findViewById(R.id.btnCalculate);
+        seeder = (Button) findViewById(R.id.btnSeeder);
         //TODO add checks for empty room list and block add windows and doors buttons
-        Button clear = (Button) findViewById(R.id.btnClear);
-
         tblRoomsLayout = (TableLayout) findViewById(R.id.tblRoomsLayout);
         tblRoomsLayout.setStretchAllColumns(true);
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = sharedPref.edit();
+        editor = sharedPref.edit();
         addRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,6 +116,21 @@ public class MainActivity extends AppCompatActivity {
                 launcher.launch(intent);
             }
         });
+
+        calculate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CalculateResultActivity.class));
+            }
+        });
+
+        seeder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, TestSeederActivity.class));
+            }
+        });
+
     }
 
     @Override
@@ -126,8 +149,22 @@ public class MainActivity extends AppCompatActivity {
         String roomsAddonsBackgroundColor = "#33ff0000";
 
         tblRoomsLayout.removeAllViews();
-
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = sharedPref.edit();
+        addWindow.setEnabled(false);
+        addDoor.setEnabled(false);
+        clear.setEnabled(false);
+        calculate.setEnabled(false);
+        seeder.setEnabled(true);
+//        Toast.makeText(MainActivity.this, "start", Toast.LENGTH_LONG).show();
         if (!sharedPref.getString("ROOMS", "").equals("")) {
+
+            addWindow.setEnabled(true);
+            addDoor.setEnabled(true);
+            clear.setEnabled(true);
+            calculate.setEnabled(true);
+            seeder.setEnabled(false);
+
             String[] parsedRooms = sharedPref.getString("ROOMS", "").split("~");
 
             int roomsQuantity = parsedRooms.length;
@@ -673,7 +710,6 @@ public class MainActivity extends AppCompatActivity {
         String message = sharedPref.getString("MESSAGE", "");
         if (!message.equals("")) {
             Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
-            SharedPreferences.Editor editor = sharedPref.edit();
             editor.remove("MESSAGE");
             editor.commit();
 
