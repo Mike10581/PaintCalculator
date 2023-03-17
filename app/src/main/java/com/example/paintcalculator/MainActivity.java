@@ -44,6 +44,31 @@ public class MainActivity extends AppCompatActivity {
 
     private TableLayout tblRoomsLayout;
 
+    // Create TextView cell
+    public TextView createTextViewCell(int[] tableRowLayoutParams, int gravity, int[] padding, String backgroundColor, String textColor, boolean bold, int textSize, String text) {
+        final TextView tvCell = new TextView(this);
+        tvCell.setLayoutParams(new TableRow.LayoutParams(tableRowLayoutParams[0], tableRowLayoutParams[1]));
+        tvCell.setGravity(gravity);
+        tvCell.setPadding(padding[0], padding[1], padding[2], padding[3]);
+        tvCell.setBackgroundColor(Color.parseColor(backgroundColor));
+        tvCell.setTextColor(Color.parseColor(textColor));
+        if (bold) {
+            tvCell.setTypeface(null, Typeface.BOLD);
+        }
+        tvCell.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+        tvCell.setText(text);
+        return tvCell;
+    }
+
+    public TableRow createTableRow(int[] tableLayoutParams, int[] margins, int[] padding) {
+        final TableRow tblRow = new TableRow(this);
+        TableLayout.LayoutParams tblRowParams = new TableLayout.LayoutParams(tableLayoutParams[0], tableLayoutParams[1]);
+        tblRowParams.setMargins(margins[0], margins[1], margins[2], margins[3]);
+        tblRow.setPadding(padding[0], padding[1], padding[2], padding[3]);
+        tblRow.setLayoutParams(tblRowParams);
+        return tblRow;
+    }
+
     // Handle the result of DeleteConfirmationActivity
     private ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -137,16 +162,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        int leftRowMargin = 0;
-        int topRowMargin = 0;
-        int rightRowMargin = 0;
-        int bottomRowMargin = 0;
         int bigTextSize = 70, smallTextSize = 45, mediumTextSize = 55;
 
         String titleBackgroundColor = "#FF6200EE";
         String titleTextColor = "#FFFFFFFF";
         String descriptionTitleBackgroundColor = "#220000ff";
         String roomsAddonsBackgroundColor = "#33ff0000";
+        String descriptionTitleTextColor = "#000000";
+
+        int[] PARENT_CONTENT_TABLE_LAYOUT = {
+                TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.WRAP_CONTENT
+        };
 
         tblRoomsLayout.removeAllViews();
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -173,93 +200,72 @@ public class MainActivity extends AppCompatActivity {
                 String[] parsedRoom = parsedRooms[i].split(",");
                 String[] parsedInfo = parsedRoom[0].split(":");
 
-
                 // create table for room title
-                TableLayout roomTitleLayout = new TableLayout(this);
-                roomTitleLayout.setStretchAllColumns(true);
-                roomTitleLayout.removeAllViews();
-
-                // create cell
-                final TextView tvRoomTitle = new TextView(this);
-                tvRoomTitle.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-                tvRoomTitle.setGravity(Gravity.LEFT);
-                tvRoomTitle.setPadding(10, 20, 10, 20);
-                tvRoomTitle.setBackgroundColor(Color.parseColor(titleBackgroundColor));
-                tvRoomTitle.setTextColor(Color.parseColor(titleTextColor));
-                tvRoomTitle.setTypeface(null, Typeface.BOLD);
-                tvRoomTitle.setText(String.valueOf(parsedInfo[0] + ". " + parsedInfo[5]));
-                tvRoomTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, bigTextSize);
-
-                // create row
-                final TableRow trRoomTitle = new TableRow(this);
-                trRoomTitle.setId(i + 1);
-                TableLayout.LayoutParams trRoomTitleParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
-                trRoomTitleParams.setMargins(leftRowMargin, topRowMargin, rightRowMargin, bottomRowMargin);
-                trRoomTitle.setPadding(0, 0, 0, 0);
-                trRoomTitle.setLayoutParams(trRoomTitleParams);
+                TableLayout tableRoomTitle = new TableLayout(this);
+                tableRoomTitle.setStretchAllColumns(true);
+                tableRoomTitle.removeAllViews();
+                // create row for room title
+                int[] marginsRow = {0, 0, 0, 0};
+                int[] paddingRow = {0, 0, 0, 0};
+                final TableRow tableRowRoomTitle = createTableRow(
+                        PARENT_CONTENT_TABLE_LAYOUT,
+                        marginsRow,
+                        paddingRow);
+                // create cell for room title
+                int[] paddingRoomTitleCell = {10, 20, 10, 20};
+                final TextView tableCellRoomTitle = createTextViewCell(
+                        PARENT_CONTENT_TABLE_LAYOUT,
+                        Gravity.START,
+                        paddingRoomTitleCell,
+                        titleBackgroundColor,
+                        titleTextColor,
+                        true,
+                        bigTextSize,
+                        parsedInfo[0] + ". " + parsedInfo[5]);
 
                 // add cell to row
-                trRoomTitle.addView(tvRoomTitle);
-
+                tableRowRoomTitle.addView(tableCellRoomTitle);
                 // add row to table
-                roomTitleLayout.addView(trRoomTitle, trRoomTitleParams);
+                tableRoomTitle.addView(tableRowRoomTitle);
+
 
 
                 // create table for room info (size and color)
-                TableLayout roomInfoLayout = new TableLayout(this);
-                roomInfoLayout.setStretchAllColumns(true);
-                roomInfoLayout.removeAllViews();
-
-                // create cells
-                final TextView tvRoomColorTitle = new TextView(this);
-                tvRoomColorTitle.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-                tvRoomColorTitle.setGravity(Gravity.RIGHT);
-                tvRoomColorTitle.setPadding(10, 20, 10, 20);
-                tvRoomColorTitle.setTypeface(null, Typeface.BOLD);
-                tvRoomColorTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
-                tvRoomColorTitle.setText("Color");
-
-                final TextView tvRoomWidthTitle = new TextView(this);
-                tvRoomWidthTitle.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-                tvRoomWidthTitle.setGravity(Gravity.RIGHT);
-                tvRoomWidthTitle.setPadding(10, 20, 10, 20);
-                tvRoomWidthTitle.setTypeface(null, Typeface.BOLD);
-                tvRoomWidthTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
-                tvRoomWidthTitle.setText("Width");
-
-                final TextView tvRoomLengthTitle = new TextView(this);
-                tvRoomLengthTitle.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-                tvRoomLengthTitle.setGravity(Gravity.RIGHT);
-                tvRoomLengthTitle.setPadding(10, 20, 10, 20);
-                tvRoomLengthTitle.setTypeface(null, Typeface.BOLD);
-                tvRoomLengthTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
-                tvRoomLengthTitle.setText("Length");
-
-                final TextView tvRoomHeightTitle = new TextView(this);
-                tvRoomHeightTitle.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-                tvRoomHeightTitle.setGravity(Gravity.RIGHT);
-                tvRoomHeightTitle.setPadding(10, 20, 10, 20);
-                tvRoomHeightTitle.setTypeface(null, Typeface.BOLD);
-                tvRoomHeightTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
-                tvRoomHeightTitle.setText("Height");
-
+                TableLayout tableRoomInfo = new TableLayout(this);
+                tableRoomInfo.setStretchAllColumns(true);
+                tableRoomInfo.removeAllViews();
                 // create row
-                final TableRow trRoomInfoTitle = new TableRow(this);
-//                        trRoomInfoTitle.setId(i + 1);
-                TableLayout.LayoutParams trRoomInfoParamsTitle = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
-                trRoomInfoParamsTitle.setMargins(leftRowMargin, topRowMargin, rightRowMargin, bottomRowMargin);
-                trRoomInfoTitle.setPadding(0, 0, 0, 0);
-                trRoomInfoTitle.setBackgroundColor(Color.parseColor(descriptionTitleBackgroundColor));
-                trRoomInfoTitle.setLayoutParams(trRoomInfoParamsTitle);
+                final TableRow trRoomInfoTitle = createTableRow(
+                        PARENT_CONTENT_TABLE_LAYOUT,
+                        marginsRow,
+                        paddingRow
+                );
+                // create cells
+                String[] roomInfoTableTitles = {"Color", "Width", "Length", "Height"};
 
-                // add cells to row
-                trRoomInfoTitle.addView(tvRoomColorTitle);
-                trRoomInfoTitle.addView(tvRoomWidthTitle);
-                trRoomInfoTitle.addView(tvRoomLengthTitle);
-                trRoomInfoTitle.addView(tvRoomHeightTitle);
-
+                for (String cell : roomInfoTableTitles) {
+                    int[] CONTENT_CONTENT_TABLE_LAYOUT = {
+                            TableRow.LayoutParams.WRAP_CONTENT,
+                            TableRow.LayoutParams.WRAP_CONTENT
+                    };
+                    int[] paddingRoomInfoCell = {10, 20, 10, 20};
+                    final TextView tvRoomInfoTitle = createTextViewCell(
+                            CONTENT_CONTENT_TABLE_LAYOUT,
+                            Gravity.RIGHT,
+                            paddingRoomInfoCell,
+                            descriptionTitleBackgroundColor,
+                            descriptionTitleTextColor,
+                            true,
+                            smallTextSize,
+                            cell);
+                    // add cells to row
+                    trRoomInfoTitle.addView(tvRoomInfoTitle);
+                }
                 // add row to table
-                roomInfoLayout.addView(trRoomInfoTitle, trRoomInfoParamsTitle);
+                tableRoomInfo.addView(trRoomInfoTitle);
+
+
+
 
 
                 int width = Integer.parseInt(parsedInfo[1]);
@@ -304,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
                 final TableRow trRoomInfo = new TableRow(this);
 //                        trRoomInfo.setId(i + 1);
                 TableLayout.LayoutParams trRoomInfoParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
-                trRoomInfoParams.setMargins(leftRowMargin, topRowMargin, rightRowMargin, bottomRowMargin);
+                trRoomInfoParams.setMargins(0, 0, 0, 0);
                 trRoomInfo.setPadding(0, 10, 0, 10);
                 trRoomInfo.setLayoutParams(trRoomInfoParams);
 
@@ -316,7 +322,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 // add row to table
-                roomInfoLayout.addView(trRoomInfo, trRoomInfoParams);
+                tableRoomInfo.addView(trRoomInfo, trRoomInfoParams);
 
 //                        if (i > -1) {
 //                            tr.setOnClickListener(new View.OnClickListener() {
@@ -345,7 +351,7 @@ public class MainActivity extends AppCompatActivity {
                 final TableRow trWindowTitle = new TableRow(this);
 //                        trWindowTitle.setId(i + 1);
                 TableLayout.LayoutParams trWindowTitleParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
-                trWindowTitleParams.setMargins(leftRowMargin, topRowMargin, rightRowMargin, bottomRowMargin);
+                trWindowTitleParams.setMargins(0, 0, 0, 0);
                 trWindowTitle.setPadding(0, 0, 0, 0);
                 trWindowTitle.setLayoutParams(trWindowTitleParams);
 
@@ -380,7 +386,7 @@ public class MainActivity extends AppCompatActivity {
                 final TableRow trDoorTitle = new TableRow(this);
 //                        trDoorTitle.setId(i + 1);
                 TableLayout.LayoutParams trDoorTitleParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
-                trDoorTitleParams.setMargins(leftRowMargin, topRowMargin, rightRowMargin, bottomRowMargin);
+                trDoorTitleParams.setMargins(0, 0, 0, 0);
                 trDoorTitle.setPadding(0, 0, 0, 0);
                 trDoorTitle.setLayoutParams(trDoorTitleParams);
 
@@ -435,7 +441,7 @@ public class MainActivity extends AppCompatActivity {
                         final TableRow trWindowInfoTitle = new TableRow(this);
 //                        trWindowInfoTitle.setId(i + 1);
                         TableLayout.LayoutParams trWindowInfoParamsTitle = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
-                        trWindowInfoParamsTitle.setMargins(leftRowMargin, topRowMargin, rightRowMargin, bottomRowMargin);
+                        trWindowInfoParamsTitle.setMargins(0, 0, 0, 0);
                         trWindowInfoTitle.setPadding(0, 0, 0, 0);
                         trWindowInfoTitle.setBackgroundColor(Color.parseColor("#220000ff"));
                         trWindowInfoTitle.setLayoutParams(trWindowInfoParamsTitle);
@@ -497,7 +503,7 @@ public class MainActivity extends AppCompatActivity {
                             final TableRow trWindowInfo = new TableRow(this);
 //                        trWindowInfo.setId(i + 1);
                             TableLayout.LayoutParams trWindowInfoParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
-                            trWindowInfoParams.setMargins(leftRowMargin, topRowMargin, rightRowMargin, bottomRowMargin);
+                            trWindowInfoParams.setMargins(0, 0, 0, 0);
                             trWindowInfo.setPadding(0, 10, 0, 10);
                             trWindowInfo.setLayoutParams(trWindowInfoParams);
 
@@ -551,7 +557,7 @@ public class MainActivity extends AppCompatActivity {
                         final TableRow trDoorInfoTitle = new TableRow(this);
 //                        trDoorInfoTitle.setId(i + 1);
                         TableLayout.LayoutParams trDoorInfoParamsTitle = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
-                        trDoorInfoParamsTitle.setMargins(leftRowMargin, topRowMargin, rightRowMargin, bottomRowMargin);
+                        trDoorInfoParamsTitle.setMargins(0, 0, 0, 0);
                         trDoorInfoTitle.setPadding(0, 0, 0, 0);
                         trDoorInfoTitle.setBackgroundColor(Color.parseColor("#220000ff"));
                         trDoorInfoTitle.setLayoutParams(trDoorInfoParamsTitle);
@@ -613,7 +619,7 @@ public class MainActivity extends AppCompatActivity {
                             final TableRow trDoorInfo = new TableRow(this);
 //                        trDoorInfo.setId(i + 1);
                             TableLayout.LayoutParams trDoorInfoParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
-                            trDoorInfoParams.setMargins(leftRowMargin, topRowMargin, rightRowMargin, bottomRowMargin);
+                            trDoorInfoParams.setMargins(0, 0, 0, 0);
                             trDoorInfo.setPadding(0, 10, 0, 10);
                             trDoorInfo.setLayoutParams(trDoorInfoParams);
 
@@ -657,7 +663,7 @@ public class MainActivity extends AppCompatActivity {
                 final TableRow trFooter = new TableRow(this);
 //                        trFooter.setId(i + 1);
                 TableLayout.LayoutParams trFooterParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
-                trFooterParams.setMargins(leftRowMargin, topRowMargin, rightRowMargin, bottomRowMargin);
+                trFooterParams.setMargins(0, 0, 0, 0);
                 trFooter.setPadding(0, 0, 0, 0);
                 trFooter.setLayoutParams(trFooterParams);
 
@@ -675,8 +681,8 @@ public class MainActivity extends AppCompatActivity {
                 TableLayout.LayoutParams tbTablesParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
                 tbTablesParams.setMargins(10, 0, 10, 0);
 
-                tblRoomsLayout.addView(roomTitleLayout, tbTitleTableParams);
-                tblRoomsLayout.addView(roomInfoLayout, tbTablesParams);
+                tblRoomsLayout.addView(tableRoomTitle, tbTitleTableParams);
+                tblRoomsLayout.addView(tableRoomInfo, tbTablesParams);
                 if (parsedRoom.length > 1) {
                     if (parsedRoom[1].length() > 1) {
                         tblRoomsLayout.addView(windowTitleLayout, tbTablesParams);
@@ -693,7 +699,7 @@ public class MainActivity extends AppCompatActivity {
 //                            // add separator row
 //                            final TableRow trSep = new TableRow(this);
 //                            TableLayout.LayoutParams trParamsSep = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
-//                            trParamsSep.setMargins(leftRowMargin, topRowMargin, rightRowMargin, bottomRowMargin);
+//                            trParamsSep.setMargins(0, 0, 0, 0);
 //                            trSep.setLayoutParams(trParamsSep);
 //                            TextView tvSep = new TextView(this);
 //                            TableRow.LayoutParams tvSepLay = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
