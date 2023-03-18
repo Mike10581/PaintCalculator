@@ -608,7 +608,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 // add row separator as footer into main table
-                tblRoomsLayout.addView(createRowSeparator(1, descriptionTitleBackgroundColor, 48), tbTablesParams);
+                tblRoomsLayout.addView(createRowSeparator(1, descriptionTitleBackgroundColor, 32), tbTablesParams);
 
             }
         }
