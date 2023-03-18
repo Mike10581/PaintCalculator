@@ -18,6 +18,31 @@
         android:padding="10sp"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/txtSeedingConfirmationMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingStart="20dp"
+        android:paddingTop="30dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="10dp"
+        android:text="@string/txtSeedingConfirmationMessage"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/txtSeedingConfirmationQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="10dp"
+        android:text="@string/txtSeedingConfirmationQuestion"
+        android:textColor="#FF0000"
+        android:textSize="24sp" />
+
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -208,11 +208,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        int bigTextSize = 70, smallTextSize = 45, mediumTextSize = 55;
-        String titleBackgroundColor = "#FF6200EE";
+        int bigTextSize = 70, smallTextSize = 50, mediumTextSize = 60;
+        String titleBackgroundColor = "#FF363636";
         String titleTextColor = "#FFFFFFFF";
-        String descriptionTitleBackgroundColor = "#220000ff";
-        String roomsAddonsBackgroundColor = "#33ff0000";
+        String descriptionTitleBackgroundColor = "#FFCACACA";
+        String roomsAddonsBackgroundColor = "#220000FF";
         String descriptionTitleTextColor = "#000000";
 
         tblRoomsLayout.removeAllViews();
@@ -504,7 +504,7 @@ public class MainActivity extends AppCompatActivity {
 
                             // add row separator if it is not last row of data
                             if (i < numberOfWindows - 1) {
-                                tableWindowInfo.addView(createRowSeparator(windowInfoTableTitles.length, "#000000", 4));
+                                tableWindowInfo.addView(createRowSeparator(windowInfoTableTitles.length, descriptionTitleBackgroundColor, 4));
                             }
                         }
                         // add window tables into main table
@@ -590,7 +590,7 @@ public class MainActivity extends AppCompatActivity {
 
                             // add row separator if it is not last row of data
                             if (i < numberOfDoors - 1) {
-                                tableDoorInfo.addView(createRowSeparator(doorInfoTableTitles.length, "#000000", 4));
+                                tableDoorInfo.addView(createRowSeparator(doorInfoTableTitles.length, descriptionTitleBackgroundColor, 4));
                             }
                         }
                         // add doors tables into main table
@@ -608,7 +608,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 // add row separator as footer into main table
-                tblRoomsLayout.addView(createRowSeparator(1, "#000000", 48), tbTablesParams);
+                tblRoomsLayout.addView(createRowSeparator(1, descriptionTitleBackgroundColor, 48), tbTablesParams);
 
             }
         }

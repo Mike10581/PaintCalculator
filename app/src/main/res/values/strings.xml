@@ -14,6 +14,10 @@
     <string name="btnSeed">Seed</string>
     <string name="txtSelectColor">Select color</string>
     <string name="txtDelete">Deleting…</string>
+    <string name="txtDeleteConfirmationMessage">The data will be immediately removed and cannot be recovered.</string>
+    <string name="txtDeleteConfirmationQuestion">Are you sure you want to proceed with this action?</string>
+    <string name="txtSeedingConfirmationMessage">This process that you are about to proceed with is for testing purposes only. I have seeded some sample data that you can use to test the functionality of my application. If you decide to use my application for your own calculations, you can easily remove the seeded data and replace it with your own.</string>
+    <string name="txtSeedingConfirmationQuestion">Are you sure you want to seed sample data?</string>
     <string name="lblHeight">Height:</string>
     <string name="lblWidth">Width:</string>
     <string name="lblLength">Length:</string>
@@ -27,7 +31,7 @@
     <string name="btnDelete">Delete</string>
     <string name="btnSelect">Select</string>
     <string name="lblColor">Paint color:</string>
-    <string name="btnClear">Delete all</string>
+    <string name="btnClear">Delete all rooms</string>
     <string name="lblRoomTitle">Enter title for the room</string>
     <string name="promptRoom">Chose the room</string>
     <string name="lblForTheRoom">For the room:</string>
