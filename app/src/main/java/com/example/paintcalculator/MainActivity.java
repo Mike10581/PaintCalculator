@@ -194,9 +194,13 @@ public class MainActivity extends AppCompatActivity {
                 TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT
         };
+        int[] marginsRow = {0, 0, 0, 0};
+        int[] paddingRow = {0, 0, 0, 0};
+        int[] paddingRowData = {0, 10, 0, 10};
         int[] paddingRoomTitleCell = {10, 20, 10, 20};
         int[] paddingRoomInfoCell = {10, 20, 10, 20};
         int[] paddingRoomInfoDataCell = {10, 5, 10, 5};
+        int[] paddingRoomAddonsTitle = {10, 10, 10, 5};
 
         tblRoomsLayout.removeAllViews();
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -228,9 +232,6 @@ public class MainActivity extends AppCompatActivity {
                 tableRoomTitle.setStretchAllColumns(true);
                 tableRoomTitle.removeAllViews();
                 // create row for room title
-                int[] marginsRow = {0, 0, 0, 0};
-                int[] paddingRow = {0, 0, 0, 0};
-                int[] paddingRowData = {0, 10, 0, 10};
                 final TableRow tableRowRoomTitle = createTableRow(
                         PARENT_CONTENT_TABLE_LAYOUT,
                         marginsRow,
@@ -327,75 +328,70 @@ public class MainActivity extends AppCompatActivity {
 //                            });
 
 
-
                 // create table for windows title
-                TableLayout windowTitleLayout = new TableLayout(this);
-                windowTitleLayout.setStretchAllColumns(true);
-                windowTitleLayout.removeAllViews();
-
-                // create cell
-                final TextView tvWindowTitle = new TextView(this);
-                tvWindowTitle.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-                tvWindowTitle.setGravity(Gravity.LEFT);
-                tvWindowTitle.setPadding(10, 10, 10, 5);
-                tvWindowTitle.setBackgroundColor(Color.parseColor(roomsAddonsBackgroundColor));
-                tvWindowTitle.setTypeface(null, Typeface.BOLD);
-                tvWindowTitle.setText("Windows:");
-                tvWindowTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, mediumTextSize);
-
+                TableLayout tableWindowTitle = new TableLayout(this);
+                tableWindowTitle.setStretchAllColumns(true);
+                tableWindowTitle.removeAllViews();
                 // create row
-                final TableRow trWindowTitle = new TableRow(this);
-//                        trWindowTitle.setId(i + 1);
-                TableLayout.LayoutParams trWindowTitleParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
-                trWindowTitleParams.setMargins(0, 0, 0, 0);
-                trWindowTitle.setPadding(0, 0, 0, 0);
-                trWindowTitle.setLayoutParams(trWindowTitleParams);
-
+                final TableRow tableRowWindowTitle = createTableRow(
+                        PARENT_CONTENT_TABLE_LAYOUT,
+                        marginsRow,
+                        paddingRow);
+                // create cell
+                final TextView tableCellWindowTitle = createTextViewCell(
+                        PARENT_CONTENT_TABLE_LAYOUT,
+                        Gravity.START,
+                        paddingRoomAddonsTitle,
+                        false,
+                        roomsAddonsBackgroundColor,
+                        "#000000", //--------------------------
+                        true,
+                        mediumTextSize,
+                        "Windows:"
+                );
                 // add cell to row
-                trWindowTitle.addView(tvWindowTitle);
-
+                tableRowWindowTitle.addView(tableCellWindowTitle);
                 // add row to table
-                windowTitleLayout.addView(trWindowTitle, trWindowTitleParams);
+                tableWindowTitle.addView(tableRowWindowTitle);
 
                 // create table for windows info (size, trims width and color)
-                TableLayout windowInfoLayout = new TableLayout(this);
-                windowInfoLayout.setStretchAllColumns(true);
-                windowInfoLayout.removeAllViews();
+                TableLayout tableWindowInfo = new TableLayout(this);
+                tableWindowInfo.setStretchAllColumns(true);
+                tableWindowInfo.removeAllViews();
+
 
 
                 //create table for doors title
-                TableLayout doorTitleLayout = new TableLayout(this);
-                doorTitleLayout.setStretchAllColumns(true);
-                doorTitleLayout.removeAllViews();
-
-                // create cell
-                final TextView tvDoorTitle = new TextView(this);
-                tvDoorTitle.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-                tvDoorTitle.setGravity(Gravity.LEFT);
-                tvDoorTitle.setPadding(10, 10, 10, 5);
-                tvDoorTitle.setBackgroundColor(Color.parseColor(roomsAddonsBackgroundColor));
-                tvDoorTitle.setTypeface(null, Typeface.BOLD);
-                tvDoorTitle.setText("Doors:");
-                tvDoorTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, mediumTextSize);
-
+                TableLayout tableDoorTitle = new TableLayout(this);
+                tableDoorTitle.setStretchAllColumns(true);
+                tableDoorTitle.removeAllViews();
                 // create row
-                final TableRow trDoorTitle = new TableRow(this);
-//                        trDoorTitle.setId(i + 1);
-                TableLayout.LayoutParams trDoorTitleParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
-                trDoorTitleParams.setMargins(0, 0, 0, 0);
-                trDoorTitle.setPadding(0, 0, 0, 0);
-                trDoorTitle.setLayoutParams(trDoorTitleParams);
-
+                final TableRow tableRowDoorTitle = createTableRow(
+                        PARENT_CONTENT_TABLE_LAYOUT,
+                        marginsRow,
+                        paddingRow);
+                // create cell
+                final TextView tableCellDoorTitle = createTextViewCell(
+                        PARENT_CONTENT_TABLE_LAYOUT,
+                        Gravity.START,
+                        paddingRoomAddonsTitle,
+                        false,
+                        roomsAddonsBackgroundColor,
+                        "#000000", //--------------------------
+                        true,
+                        mediumTextSize,
+                        "Doors:"
+                );
                 // add cell to row
-                trDoorTitle.addView(tvDoorTitle);
-
+                tableRowDoorTitle.addView(tableCellDoorTitle);
                 // add row to table
-                doorTitleLayout.addView(trDoorTitle, trDoorTitleParams);
+                tableDoorTitle.addView(tableRowDoorTitle);
 
                 // create table for doors info (size, trims width and color)
-                TableLayout doorInfoLayout = new TableLayout(this);
-                doorInfoLayout.setStretchAllColumns(true);
-                doorInfoLayout.removeAllViews();
+                TableLayout tableDoorInfo = new TableLayout(this);
+                tableDoorInfo.setStretchAllColumns(true);
+                tableDoorInfo.removeAllViews();
+
 
                 if (parsedRoom.length > 1) {
                     if (parsedRoom[1].length() > 1) {
@@ -449,7 +445,7 @@ public class MainActivity extends AppCompatActivity {
                         trWindowInfoTitle.addView(tvWindowTrimColorTitle);
 
                         // add row to table
-                        windowInfoLayout.addView(trWindowInfoTitle, trWindowInfoParamsTitle);
+                        tableWindowInfo.addView(trWindowInfoTitle, trWindowInfoParamsTitle);
 
                         String[] window = parsedRoom[1].split("!");
                         for (String el : window) {
@@ -510,7 +506,7 @@ public class MainActivity extends AppCompatActivity {
                             trWindowInfo.addView(tvWindowTrimColor);
 
                             // add row to table
-                            windowInfoLayout.addView(trWindowInfo, trWindowInfoParams);
+                            tableWindowInfo.addView(trWindowInfo, trWindowInfoParams);
                         }
                     }
 
@@ -565,7 +561,7 @@ public class MainActivity extends AppCompatActivity {
                         trDoorInfoTitle.addView(tvDoorTrimColorTitle);
 
                         // add row to table
-                        doorInfoLayout.addView(trDoorInfoTitle, trDoorInfoParamsTitle);
+                        tableDoorInfo.addView(trDoorInfoTitle, trDoorInfoParamsTitle);
 
                         String[] door = parsedRoom[2].split("!");
                         for (String el : door) {
@@ -626,7 +622,7 @@ public class MainActivity extends AppCompatActivity {
                             trDoorInfo.addView(tvDoorTrimColor);
 
                             // add row to table
-                            doorInfoLayout.addView(trDoorInfo, trDoorInfoParams);
+                            tableDoorInfo.addView(trDoorInfo, trDoorInfoParams);
                         }
                     }
                 }
@@ -681,12 +677,12 @@ public class MainActivity extends AppCompatActivity {
                 tblRoomsLayout.addView(tableRoomInfo, tbTablesParams);
                 if (parsedRoom.length > 1) {
                     if (parsedRoom[1].length() > 1) {
-                        tblRoomsLayout.addView(windowTitleLayout, tbTablesParams);
-                        tblRoomsLayout.addView(windowInfoLayout, tbTablesParams);
+                        tblRoomsLayout.addView(tableWindowTitle, tbTablesParams);
+                        tblRoomsLayout.addView(tableWindowInfo, tbTablesParams);
                     }
                     if (parsedRoom[2].length() > 1) {
-                        tblRoomsLayout.addView(doorTitleLayout, tbTablesParams);
-                        tblRoomsLayout.addView(doorInfoLayout, tbTablesParams);
+                        tblRoomsLayout.addView(tableDoorTitle, tbTablesParams);
+                        tblRoomsLayout.addView(tableDoorInfo, tbTablesParams);
                     }
                 }
                 tblRoomsLayout.addView(roomFooterLayout, tbTablesParams);
