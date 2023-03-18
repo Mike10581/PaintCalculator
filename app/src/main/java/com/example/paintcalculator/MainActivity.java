@@ -22,9 +22,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Map;
-import java.util.Objects;
-
 public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
@@ -86,13 +83,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Handle the result of DeleteConfirmationActivity
-    private ActivityResultLauncher<Intent> launcher = registerForActivityResult(
+    private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == RESULT_OK) {
-
                         editor.remove("ROOMS");
                         editor.remove("ROOMS_AMOUNT");
                         editor.commit();
@@ -111,14 +107,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button addRoom = (Button) findViewById(R.id.btnAddRoom);
-        addWindow = (Button) findViewById(R.id.btnAddWindow);
-        addDoor = (Button) findViewById(R.id.btnAddDoor);
-        clear = (Button) findViewById(R.id.btnClear);
-        calculate = (Button) findViewById(R.id.btnCalculate);
-        seeder = (Button) findViewById(R.id.btnSeeder);
-        //TODO add checks for empty room list and block add windows and doors buttons
-        tblRoomsLayout = (TableLayout) findViewById(R.id.tblRoomsLayout);
+        Button addRoom = findViewById(R.id.btnAddRoom);
+        addWindow = findViewById(R.id.btnAddWindow);
+        addDoor = findViewById(R.id.btnAddDoor);
+        clear = findViewById(R.id.btnClear);
+        calculate = findViewById(R.id.btnCalculate);
+        seeder = findViewById(R.id.btnSeeder);
+
+        tblRoomsLayout = findViewById(R.id.tblRoomsLayout);
         tblRoomsLayout.setStretchAllColumns(true);
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -179,7 +175,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         int bigTextSize = 70, smallTextSize = 45, mediumTextSize = 55;
-
         String titleBackgroundColor = "#FF6200EE";
         String titleTextColor = "#FFFFFFFF";
         String descriptionTitleBackgroundColor = "#220000ff";
@@ -194,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
                 TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT
         };
+
         int[] marginsRow = {0, 0, 0, 0};
         int[] paddingRow = {0, 0, 0, 0};
         int[] paddingRowData = {0, 10, 0, 10};
@@ -203,14 +199,16 @@ public class MainActivity extends AppCompatActivity {
         int[] paddingRoomAddonsTitle = {10, 10, 10, 5};
 
         tblRoomsLayout.removeAllViews();
+
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         editor = sharedPref.edit();
+
         addWindow.setEnabled(false);
         addDoor.setEnabled(false);
         clear.setEnabled(false);
         calculate.setEnabled(false);
         seeder.setEnabled(true);
-//        Toast.makeText(MainActivity.this, "start", Toast.LENGTH_LONG).show();
+
         if (!sharedPref.getString("ROOMS", "").equals("")) {
 
             addWindow.setEnabled(true);
@@ -221,10 +219,20 @@ public class MainActivity extends AppCompatActivity {
 
             String[] parsedRooms = sharedPref.getString("ROOMS", "").split("~");
 
-            int roomsQuantity = parsedRooms.length;
+            TableLayout.LayoutParams tbTitleTableParams = new TableLayout.LayoutParams(
+                    TableLayout.LayoutParams.MATCH_PARENT,
+                    TableLayout.LayoutParams.WRAP_CONTENT
+            );
+            tbTitleTableParams.setMargins(10, 60, 10, 0);
 
-            for (int i = 0; i < roomsQuantity; i++) {
-                String[] parsedRoom = parsedRooms[i].split(",");
+            TableLayout.LayoutParams tbTablesParams = new TableLayout.LayoutParams(
+                    TableLayout.LayoutParams.MATCH_PARENT,
+                    TableLayout.LayoutParams.WRAP_CONTENT
+            );
+            tbTablesParams.setMargins(10, 0, 10, 0);
+
+            for (String room : parsedRooms) {
+                String[] parsedRoom = room.split(",");
                 String[] parsedInfo = parsedRoom[0].split(":");
 
                 // create table for room title
@@ -235,7 +243,8 @@ public class MainActivity extends AppCompatActivity {
                 final TableRow tableRowRoomTitle = createTableRow(
                         PARENT_CONTENT_TABLE_LAYOUT,
                         marginsRow,
-                        paddingRow);
+                        paddingRow
+                );
                 // create cell for room title
                 final TextView tableCellRoomTitle = createTextViewCell(
                         PARENT_CONTENT_TABLE_LAYOUT,
@@ -246,7 +255,8 @@ public class MainActivity extends AppCompatActivity {
                         titleTextColor,
                         true,
                         bigTextSize,
-                        parsedInfo[0] + ". " + parsedInfo[5]);
+                        parsedInfo[0] + ". " + parsedInfo[5]
+                );
 
                 // add cell to row
                 tableRowRoomTitle.addView(tableCellRoomTitle);
@@ -294,13 +304,15 @@ public class MainActivity extends AppCompatActivity {
                 final TableRow rowRoomInfoData = createTableRow(
                         PARENT_CONTENT_TABLE_LAYOUT,
                         marginsRow,
-                        paddingRowData);
+                        paddingRowData
+                );
                 // create cells
                 String[] roomInfoTableData = {
                         color,
-                        String.valueOf(width / 12 + "' " + width % 12 + "\""),
-                        String.valueOf(length / 12 + "' " + length % 12 + "\""),
-                        String.valueOf(height / 12 + "' " + height % 12 + "\"")};
+                        width / 12 + "' " + width % 12 + "\"",
+                        length / 12 + "' " + length % 12 + "\"",
+                        height / 12 + "' " + height % 12 + "\""
+                };
 
                 for (String cell : roomInfoTableData) {
                     boolean border = cell.charAt(0) == '#';
@@ -313,7 +325,8 @@ public class MainActivity extends AppCompatActivity {
                             border ? getContrastingColor(Color.parseColor(color)) : "#000000",
                             false,
                             smallTextSize,
-                            cell);
+                            cell
+                    );
                     // add cells to row
                     rowRoomInfoData.addView(cellRoomInfoData);
                 }
@@ -360,7 +373,6 @@ public class MainActivity extends AppCompatActivity {
                 tableWindowInfo.removeAllViews();
 
 
-
                 //create table for doors title
                 TableLayout tableDoorTitle = new TableLayout(this);
                 tableDoorTitle.setStretchAllColumns(true);
@@ -392,6 +404,9 @@ public class MainActivity extends AppCompatActivity {
                 tableDoorInfo.setStretchAllColumns(true);
                 tableDoorInfo.removeAllViews();
 
+                // add room tables into main table
+                tblRoomsLayout.addView(tableRoomTitle, tbTitleTableParams);
+                tblRoomsLayout.addView(tableRoomInfo, tbTablesParams);
 
                 if (parsedRoom.length > 1) {
                     if (parsedRoom[1].length() > 1) {
@@ -415,7 +430,8 @@ public class MainActivity extends AppCompatActivity {
                                     descriptionTitleTextColor,
                                     true,
                                     smallTextSize,
-                                    cell);
+                                    cell
+                            );
                             // add cells to row
                             rowWindowInfoTitle.addView(cellWindowInfoTitle);
                         }
@@ -440,11 +456,12 @@ public class MainActivity extends AppCompatActivity {
                                     paddingRowData);
                             // create cells
                             String[] windowInfoTableData = {
-                                    String.valueOf(widthWindow / 12 + "' " + widthWindow % 12 + "\""),
-                                    String.valueOf(heightWindow / 12 + "' " + heightWindow % 12 + "\""),
-                                    String.valueOf(quantityWindow + " pcs."),
+                                    widthWindow / 12 + "' " + widthWindow % 12 + "\"",
+                                    heightWindow / 12 + "' " + heightWindow % 12 + "\"",
+                                    quantityWindow + " pcs.",
                                     colorWindow,
-                                    String.valueOf(widthTrimWindow + "\"")};
+                                    widthTrimWindow + "\""
+                            };
 
                             for (String cell : windowInfoTableData) {
                                 boolean border = cell.charAt(0) == '#';
@@ -457,13 +474,17 @@ public class MainActivity extends AppCompatActivity {
                                         border ? getContrastingColor(Color.parseColor(colorWindow)) : "#000000",
                                         false,
                                         smallTextSize,
-                                        cell);
+                                        cell
+                                );
                                 // add cells to row
                                 rowWindowInfo.addView(cellWindowInfoData);
                             }
                             // add row to table
                             tableWindowInfo.addView(rowWindowInfo);
                         }
+                        // add window tables into main table
+                        tblRoomsLayout.addView(tableWindowTitle, tbTablesParams);
+                        tblRoomsLayout.addView(tableWindowInfo, tbTablesParams);
                     }
 
                     if (parsedRoom[2].length() > 1) {
@@ -487,7 +508,8 @@ public class MainActivity extends AppCompatActivity {
                                     descriptionTitleTextColor,
                                     true,
                                     smallTextSize,
-                                    cell);
+                                    cell
+                            );
                             // add cells to row
                             rowDoorInfoTitle.addView(cellDoorInfoTitle);
                         }
@@ -500,7 +522,7 @@ public class MainActivity extends AppCompatActivity {
                             String[] parsedDoorInfo = el.split(":");
 
                             int widthDoor = Integer.parseInt(parsedDoorInfo[0]);
-                            int lengthDoor = Integer.parseInt(parsedDoorInfo[1]);
+                            int heightDoor = Integer.parseInt(parsedDoorInfo[1]);
                             int quantityDoor = Integer.parseInt(parsedDoorInfo[2]);
                             int widthTrimDoor = Integer.parseInt(parsedDoorInfo[3]);
                             String colorDoor = parsedDoorInfo[4];
@@ -512,11 +534,11 @@ public class MainActivity extends AppCompatActivity {
                                     paddingRowData);
                             // create cells
                             String[] doorInfoTableData = {
-                                    String.valueOf(widthDoor / 12 + "' " + widthDoor % 12 + "\""),
-                                    String.valueOf(lengthDoor / 12 + "' " + lengthDoor % 12 + "\""),
-                                    String.valueOf(quantityDoor + " pcs."),
+                                    widthDoor / 12 + "' " + widthDoor % 12 + "\"",
+                                    heightDoor / 12 + "' " + heightDoor % 12 + "\"",
+                                    quantityDoor + " pcs.",
                                     colorDoor,
-                                    String.valueOf(widthTrimDoor + "\"")
+                                    widthTrimDoor + "\""
                             };
 
                             for (String cell : doorInfoTableData) {
@@ -530,13 +552,17 @@ public class MainActivity extends AppCompatActivity {
                                         border ? getContrastingColor(Color.parseColor(colorDoor)) : "#000000",
                                         false,
                                         smallTextSize,
-                                        cell);
+                                        cell
+                                );
                                 // add cells to row
                                 rowDoorInfo.addView(cellDoorInfoData);
                             }
                             // add row to table
                             tableDoorInfo.addView(rowDoorInfo);
                         }
+                        // add doors tables into main table
+                        tblRoomsLayout.addView(tableDoorTitle, tbTablesParams);
+                        tblRoomsLayout.addView(tableDoorInfo, tbTablesParams);
                     }
                 }
 
@@ -549,56 +575,35 @@ public class MainActivity extends AppCompatActivity {
 
 
                 // create table for room title
-                TableLayout roomFooterLayout = new TableLayout(this);
-                roomFooterLayout.setStretchAllColumns(true);
-                roomFooterLayout.removeAllViews();
-
-                // create cell
-                final TextView tvFooter = new TextView(this);
-                tvFooter.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-                tvFooter.setGravity(Gravity.LEFT);
-                tvFooter.setPadding(0, 0, 0, 0);
-                tvFooter.setBackgroundColor(Color.parseColor(titleBackgroundColor));
-                tvFooter.setTextColor(Color.parseColor(titleTextColor));
-                tvFooter.setTypeface(null, Typeface.BOLD);
-                tvFooter.setText("");
-                tvFooter.setTextSize(TypedValue.COMPLEX_UNIT_PX, 10);
-
+                TableLayout tableRoomFooter = new TableLayout(this);
+                tableRoomFooter.setStretchAllColumns(true);
+                tableRoomFooter.removeAllViews();
                 // create row
-                final TableRow trFooter = new TableRow(this);
-//                        trFooter.setId(i + 1);
-                TableLayout.LayoutParams trFooterParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
-                trFooterParams.setMargins(0, 0, 0, 0);
-                trFooter.setPadding(0, 0, 0, 0);
-                trFooter.setLayoutParams(trFooterParams);
-
+                final TableRow tableRowFooter = createTableRow(
+                        PARENT_CONTENT_TABLE_LAYOUT,
+                        marginsRow,
+                        paddingRow
+                );
+                // create cell
+                final TextView tableCellFooter = createTextViewCell(
+                        PARENT_CONTENT_TABLE_LAYOUT,
+                        Gravity.START,
+                        paddingRow,
+                        false,
+                        titleBackgroundColor,
+                        titleTextColor,
+                        true,
+                        10,
+                        ""
+                );
                 // add cell to row
-                trFooter.addView(tvFooter);
+                tableRowFooter.addView(tableCellFooter);
 
                 // add row to table
-                roomFooterLayout.addView(trFooter, trFooterParams);
+                tableRoomFooter.addView(tableRowFooter);
 
-
-                // add tables into main table
-                TableLayout.LayoutParams tbTitleTableParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
-                tbTitleTableParams.setMargins(10, 60, 10, 0);
-
-                TableLayout.LayoutParams tbTablesParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
-                tbTablesParams.setMargins(10, 0, 10, 0);
-
-                tblRoomsLayout.addView(tableRoomTitle, tbTitleTableParams);
-                tblRoomsLayout.addView(tableRoomInfo, tbTablesParams);
-                if (parsedRoom.length > 1) {
-                    if (parsedRoom[1].length() > 1) {
-                        tblRoomsLayout.addView(tableWindowTitle, tbTablesParams);
-                        tblRoomsLayout.addView(tableWindowInfo, tbTablesParams);
-                    }
-                    if (parsedRoom[2].length() > 1) {
-                        tblRoomsLayout.addView(tableDoorTitle, tbTablesParams);
-                        tblRoomsLayout.addView(tableDoorInfo, tbTablesParams);
-                    }
-                }
-                tblRoomsLayout.addView(roomFooterLayout, tbTablesParams);
+                // add footer into main table
+                tblRoomsLayout.addView(tableRoomFooter, tbTablesParams);
 
 //                        if (i > -1) {
 //                            // add separator row

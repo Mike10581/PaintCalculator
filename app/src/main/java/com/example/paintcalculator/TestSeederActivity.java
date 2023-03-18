@@ -28,6 +28,7 @@ public class TestSeederActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 editor.putString("ROOMS", testRoomsData);
+                editor.putInt("ROOMS_AMOUNT", 8);
                 editor.commit();
                 finish();
             }
