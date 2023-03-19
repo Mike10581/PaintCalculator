@@ -32,7 +32,8 @@ public class CalculateResultActivity extends AppCompatActivity {
     int[] marginsRow = {0, 0, 0, 0};
     int[] paddingRow = {0, 0, 0, 0};
     int[] paddingRowData = {0, 10, 0, 10};
-    int[] paddingRoomTitleCell = {10, 20, 10, 20};
+    int[] paddingSummaryDescription = {15, 0, 15, 60};
+    int[] paddingTotalGallonsCell = {10, 20, 10, 20};
     int[] paddingRoomInfoCell = {10, 20, 10, 20};
     int[] paddingRoomInfoDataCell = {10, 5, 10, 5};
     int[] paddingRoomAddonsTitle = {10, 10, 10, 5};
@@ -50,7 +51,7 @@ public class CalculateResultActivity extends AppCompatActivity {
         int blue = Color.blue(color);
 
         int average = (red + green + blue) / 3;
-        return (average >= 128) ? "#000000" : "#FFFFFF";
+        return (average >= 150) ? "#000000" : "#FFFFFF";
     }
 
     public TextView createTextViewCell(
@@ -205,15 +206,11 @@ public class CalculateResultActivity extends AppCompatActivity {
             String roomTitle = parsedInfo[5];
 
             float roomWallsSqFt = (roomWidthFT * roomHeightFT + roomLengthFT * roomHeightFT) * 2;
-            float roomPaintGal = roomWallsSqFt * numberOfCoats / coverageRateOfPaint;
+            float roomPaintGal = roomWallsSqFt / coverageRateOfPaint;
 
             // Add a new key-value pair (save color -> gallons)
             resultObjectColorSqFT.addColorValue(roomColor, roomWallsSqFt);
             resultObjectColorSqFT.addColorValue("CEILING", roomWidthFT * roomLengthFT);
-
-            //TODO ceiling color add at the end of table
-//            float ceilingPaintGal = ceilingSqFt * numberOfCoats / coverageRateOfPaint;
-
 
             if (parsedRoom.length > 1) {
                 if (parsedRoom[1].length() > 1) {
@@ -302,13 +299,89 @@ public class CalculateResultActivity extends AppCompatActivity {
             }
             // add row to table
             tableRoomInfo.addView(rowRoomInfoData);
-            //TODO add ceiling row somewhere here
 
             // add row separator
             tableRoomInfo.addView(createRowSeparator(roomInfoTableTitles.length, descriptionTitleBackgroundColor, j < numberOfRooms - 1 ? 4 : 32));
         }
 
+        // create table
+        TableLayout tableSummary = new TableLayout(this);
+        tableSummary.setStretchAllColumns(true);
+        tableSummary.removeAllViews();
 
+        // create row
+        final TableRow tableRowResultNote = createTableRow(
+                PARENT_CONTENT_TABLE_LAYOUT,
+                marginsRow,
+                paddingRow
+        );
+
+        // create cell
+        final TextView tableCellResultNote = createTextViewCell(
+                CONTENT_CONTENT_TABLE_LAYOUT,
+                Gravity.START,
+                paddingSummaryDescription,
+                false,
+                "#FFFFFF",
+                "#000000",
+                true,
+                smallTextSize-5,
+                "Note: The gallons of paint needed to cover the walls listed in this table are calculated based on the assumption of a single coat application and coverage rate is 350 square feet per gallon."
+        );
+
+        // create row
+        final TableRow tableRowSummaryDescription = createTableRow(
+                PARENT_CONTENT_TABLE_LAYOUT,
+                marginsRow,
+                paddingRow
+        );
+
+        // create cell
+        final TextView tableCellSummaryDescription = createTextViewCell(
+                CONTENT_CONTENT_TABLE_LAYOUT,
+                Gravity.START,
+                paddingSummaryDescription,
+                false,
+                "#FFFFFF",
+                "#000000",
+                false,
+                smallTextSize-5,
+                "In general, most interior painting projects require at least two coats of paint for a smooth and even finish. However, some paints with high-quality pigments and binders may provide good coverage with just one coat, while others may require three or more coats to achieve the desired opacity. The median coverage rate of paint for inside painting can vary depending on the type of paint and its quality. However, a typical coverage rate for interior paint is around 350 to 400 square feet per gallon, assuming a smooth surface and even application."
+        );
+
+
+        // create row
+        final TableRow tableRowSummary = createTableRow(
+                PARENT_CONTENT_TABLE_LAYOUT,
+                marginsRow,
+                paddingRow
+        );
+
+        // create cell
+        final TextView tableCellSummary = createTextViewCell(
+                CONTENT_CONTENT_TABLE_LAYOUT,
+                Gravity.CENTER_HORIZONTAL,
+                paddingRow,
+                false,
+                "#FFFFFF",
+                "#000000",
+                true,
+                bigTextSize,
+                "Summary"
+        );
+
+        // add cell to row
+        tableRowResultNote.addView(tableCellResultNote);
+        tableRowSummary.addView(tableCellSummary);
+        tableRowSummaryDescription.addView(tableCellSummaryDescription);
+        // add row to table
+        tableSummary.addView(tableRowResultNote);
+        tableSummary.addView(tableRowSummaryDescription);
+        tableSummary.addView(tableRowSummary);
+        // add table to main table
+        tblResultLayout.addView(tableSummary, tbTitleTableParams);
+
+        
         // create table for paint summary
         TableLayout tablePaintSummary = new TableLayout(this);
         tablePaintSummary.setStretchAllColumns(true);
@@ -320,7 +393,7 @@ public class CalculateResultActivity extends AppCompatActivity {
                 paddingRow
         );
         // create cells
-        String[] paintSummaryTitles = {"Color", "SQ. FT.", "Two coats", "+15%"};
+        String[] paintSummaryTitles = {"Color", "SQ. FT.", "Two coats", "BUY"};
 
         int numberOfPaintSummaryTitles = paintSummaryTitles.length;
 
@@ -341,7 +414,7 @@ public class CalculateResultActivity extends AppCompatActivity {
         // add row to table
         tablePaintSummary.addView(rowPaintSummary);
 
-
+        int totalGallons = 0;
         // Get all key-value pairs
         Map<String, Float> allColorValuePairs = resultObjectColorSqFT.getColorValueMap();
         for (Map.Entry<String, Float> entry : allColorValuePairs.entrySet()) {
@@ -367,6 +440,7 @@ public class CalculateResultActivity extends AppCompatActivity {
                         String.valueOf(Float.valueOf(decimalFormat.format(paintGal))) + " Gal.",
                         String.valueOf((int) Math.ceil(paintGal * 1.15)) + " Gal."
                 };
+                totalGallons += (int) Math.ceil(paintGal * 1.15);
 
                 int numberOfPaintSummaryData = paintSummaryData.length;
 
@@ -405,12 +479,12 @@ public class CalculateResultActivity extends AppCompatActivity {
         );
         // create cells
         String[] paintSummaryDataCeiling = {
-                "CEILING",
+                "-> CEILING <-",
                 String.valueOf(Math.round(valueForKeyCeiling)),
                 String.valueOf(Float.valueOf(decimalFormat.format(paintGalCeiling))) + " Gal.",
                 String.valueOf((int) Math.ceil(paintGalCeiling * 1.15)) + " Gal."
         };
-
+        totalGallons += (int) Math.ceil(paintGalCeiling * 1.15);
         int numberOfPaintSummaryData = paintSummaryDataCeiling.length;
 
         for (int i = 0; i < numberOfPaintSummaryData; i++) {
@@ -433,10 +507,66 @@ public class CalculateResultActivity extends AppCompatActivity {
         // add row separator
         tablePaintSummary.addView(createRowSeparator(roomInfoTableTitles.length, descriptionTitleBackgroundColor, 32));
 
-
         // add paint summary table into main table
         tblResultLayout.addView(tablePaintSummary, tbTitleTableParams);
+        
+        // create table for total
+        TableLayout tableTotalGallons = new TableLayout(this);
+        tableTotalGallons.setStretchAllColumns(true);
+        tableTotalGallons.removeAllViews();
 
+        // create row
+        final TableRow tableRowSummaryNote = createTableRow(
+                PARENT_CONTENT_TABLE_LAYOUT,
+                marginsRow,
+                paddingRow
+        );
+
+        // create cell
+        final TextView tableCellSummaryNote = createTextViewCell(
+                CONTENT_CONTENT_TABLE_LAYOUT,
+                Gravity.START,
+                paddingSummaryDescription,
+                false,
+                "#FFFFFF",
+                "#000000",
+                true,
+                smallTextSize-5,
+                "Note: The gallons of paint needed to cover the walls listed in this table are calculated based on the assumption of two coat applications, plus an additional 10 percent for touch-ups and mistakes. The calculated amount has been rounded to the nearest gallon for convenience."
+        );
+
+        // add cell to row
+        tableRowSummaryNote.addView(tableCellSummaryNote);
+        // add row to table
+        tableTotalGallons.addView(tableRowSummaryNote);
+
+
+        // create row for total
+        final TableRow tableRowTotalGallons = createTableRow(
+                PARENT_CONTENT_TABLE_LAYOUT,
+                marginsRow,
+                paddingRow
+        );
+
+        // create cell for total
+        final TextView tableCellTotalGallons = createTextViewCell(
+                CONTENT_CONTENT_TABLE_LAYOUT,
+                Gravity.END,
+                paddingTotalGallonsCell,
+                false,
+                titleBackgroundColor,
+                titleTextColor,
+                true,
+                mediumTextSize,
+                "Total: " + totalGallons + " Gallons."
+        );
+
+        // add cell to row
+        tableRowTotalGallons.addView(tableCellTotalGallons);
+        // add row to table
+        tableTotalGallons.addView(tableRowTotalGallons);
+        // add table to main table
+        tblResultLayout.addView(tableTotalGallons, tbTitleTableParams);
 
     }
 }

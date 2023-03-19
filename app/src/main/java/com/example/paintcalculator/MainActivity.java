@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         int blue = Color.blue(color);
 
         int average = (red + green + blue) / 3;
-        return (average >= 128) ? "#000000" : "#FFFFFF";
+        return (average >= 150) ? "#000000" : "#FFFFFF";
     }
 
     private TableLayout tblRoomsLayout;
