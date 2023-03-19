@@ -86,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="30dp"
                     android:paddingEnd="5dp"
-                    android:text="@string/lblLength"
+                    android:text="@string/lblHeight"
                     android:textSize="20sp" />
 
                 <EditText
