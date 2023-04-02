@@ -128,9 +128,9 @@ public class MainActivity extends AppCompatActivity {
                         editor.commit();
                         addWindow.setEnabled(false);
                         addDoor.setEnabled(false);
-                        clear.setEnabled(false);
-                        calculate.setEnabled(false);
-                        seeder.setEnabled(true);
+                        clear.setVisibility(View.GONE);
+                        calculate.setVisibility(View.GONE);
+                        seeder.setVisibility(View.VISIBLE);
                         tblRoomsLayout.removeAllViews();
                     }
                 }
@@ -222,17 +222,17 @@ public class MainActivity extends AppCompatActivity {
 
         addWindow.setEnabled(false);
         addDoor.setEnabled(false);
-        clear.setEnabled(false);
-        calculate.setEnabled(false);
-        seeder.setEnabled(true);
+        clear.setVisibility(View.GONE);
+        calculate.setVisibility(View.GONE);
+        seeder.setVisibility(View.VISIBLE);
 
         if (!sharedPref.getString("ROOMS", "").equals("")) {
 
             addWindow.setEnabled(true);
             addDoor.setEnabled(true);
-            clear.setEnabled(true);
-            calculate.setEnabled(true);
-            seeder.setEnabled(false);
+            clear.setVisibility(View.VISIBLE);
+            calculate.setVisibility(View.VISIBLE);
+            seeder.setVisibility(View.GONE);
 
             String[] parsedRooms = sharedPref.getString("ROOMS", "").split("~");
 
