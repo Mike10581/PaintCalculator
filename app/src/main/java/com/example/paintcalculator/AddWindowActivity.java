@@ -68,7 +68,6 @@ public class AddWindowActivity extends AppCompatActivity {
                 EditText quantityPcs = (EditText) findViewById(R.id.txtWindowQuantity);
 
                 EditText trimsWidthInch = (EditText) findViewById(R.id.txtWindowTrimsWidth);
-//                EditText trimsColor = (EditText) findViewById(R.id.txtWindowTrimsColor);
 
                 int width = 0;
                 int length = 0;
@@ -102,8 +101,6 @@ public class AddWindowActivity extends AppCompatActivity {
                     widthTrims += Integer.parseInt(trimsWidthInch.getText().toString());
                 } catch (Exception e) {
                 }
-
-//                String color = trimsColor.getText().toString().replaceAll("[~!:,]","");
 
                 boolean error = color.equals("") || width == 0 || length == 0 || quantity == 0 || widthTrims == 0;
                 int roomIndex = 0;

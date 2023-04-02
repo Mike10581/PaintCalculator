@@ -36,14 +36,11 @@ public class CalculateResultActivity extends AppCompatActivity {
     int[] paddingTotalGallonsCell = {10, 20, 10, 20};
     int[] paddingRoomInfoCell = {10, 20, 10, 20};
     int[] paddingRoomInfoDataCell = {10, 5, 10, 5};
-    int[] paddingRoomAddonsTitle = {10, 10, 10, 5};
 
     int bigTextSize = 70, smallTextSize = 50, mediumTextSize = 60;
     String titleBackgroundColor = "#FF363636";
     String titleTextColor = "#FFFFFFFF";
     String descriptionTitleBackgroundColor = "#FFCACACA";
-    String roomsAddonsBackgroundColor = "#220000FF";
-    String descriptionTitleTextColor = "#000000";
 
     public static String getContrastingColor(int color) {
         int red = Color.red(color);
